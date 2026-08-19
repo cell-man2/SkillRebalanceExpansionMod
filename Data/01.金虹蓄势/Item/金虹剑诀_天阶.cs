@@ -21,10 +21,11 @@ namespace SkillRebalanceExpansionMod.Data.Item
                     ItemFlag.天阶功法,
                     ItemFlag.天阶功法杂学
                 ],
-                desc2 = "金虹剑派秘传天阶战斗类功法，金虹之法，厚积薄发，以灵气积蓄剑势，以求一击制敌。",
+                desc2 = "金虹剑派秘传天阶战斗类功法，修炼者须修以金虹之法，则可使蓄灵气为剑势，剑出则锐不可当。",
                 wuDao =
                 [
-                    (DaoType.剑, DaoLevel.融会贯通)
+                    (DaoType.剑, DaoLevel.融会贯通),
+                    (DaoType.金, DaoLevel.略有小成)
                 ],
                 seidData = new()
                 {
@@ -50,10 +51,11 @@ namespace SkillRebalanceExpansionMod.Data.Item
                     ItemFlag.天阶功法,
                     ItemFlag.天阶功法杂学
                 ],
-                desc2 = "金虹剑派秘传天阶战斗类功法",
+                desc2 = "金虹剑派秘传天阶战斗类功法，修炼者须修以金虹之法，则可使蓄灵气为剑势，剑出则锐不可当。",
                 wuDao =
                 [
-                    (DaoType.剑, DaoLevel.融会贯通)
+                    (DaoType.剑, DaoLevel.融会贯通),
+                    (DaoType.金, DaoLevel.略有小成)
                 ],
                 seidData = new()
                 {

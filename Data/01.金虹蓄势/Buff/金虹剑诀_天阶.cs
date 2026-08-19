@@ -11,13 +11,14 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             new BuffData
             {
                 key="金虹剑诀_天阶(伤害提升&展示)",
-                localId=4,
+                localId=1,
                 buffIcon=103,
                 buffType=BuffType.功法被动,
                 name="金虹剑诀",
                 descr="每使用或消散一点金系灵气，获得【蓄势】*（2*(attack-5)/5）；每回合造成的第一次剑系伤害提升（attack）%。",
                 trigger=Trigger.回合开始时,
                 removeTrigger=RemoveTrigger.不主动移除,
+                showOnlyOne=true,
                 seidData=new()
                 {
                     {

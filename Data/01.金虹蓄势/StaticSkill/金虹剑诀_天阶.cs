@@ -40,19 +40,17 @@ namespace SkillRebalanceExpansionMod.Data
                                 {
                                     "value1",
                                     new List<string> {
-                                        "@buff:金虹剑诀_天阶(展示)",
+                                        "@buff:金虹剑诀_天阶(伤害提升&展示)",
                                         "@buff:金虹剑诀_天阶(消散灵气)",
-                                        "@buff:金虹剑诀_天阶(使用灵气)",
-                                        "@buff:金虹剑诀_天阶(伤害提升)"
+                                        "@buff:金虹剑诀_天阶(使用灵气)"
                                     }
                                 },
                                 {
                                     "value2",
                                     new List<int> {
-                                        tier,
+                                        5 * tier + 5,
                                         2 * tier,
-                                        2 * tier,
-                                        5 * tier + 5
+                                        2 * tier
                                     }
                                 }
                             }
