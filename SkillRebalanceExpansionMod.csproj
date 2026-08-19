@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net472</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <Nullable>disable</Nullable>
+        <AssemblyName>SkillRebalanceExpansionMod</AssemblyName>
+        <RootNamespace>SkillRebalanceExpansionMod</RootNamespace>
+        <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="BepInEx">
+            <HintPath>D:\Program\Steam\steamapps\workshop\content\1189490\2824349934\BepInEx\core\BepInEx.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="0Harmony">
+            <HintPath>D:\Program\Steam\steamapps\workshop\content\1189490\2824349934\BepInEx\core\0Harmony.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="Assembly-CSharp">
+            <HintPath>D:\Program\Steam\steamapps\common\觅长生\觅长生_Data\Managed\Assembly-CSharp.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="UnityEngine">
+            <HintPath>D:\Program\Steam\steamapps\common\觅长生\觅长生_Data\Managed\UnityEngine.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>D:\Program\Steam\steamapps\common\觅长生\觅长生_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+    <Target Name="CopyToGame" AfterTargets="Build">
+        <MakeDir Directories="D:\Program\Steam\steamapps\common\觅长生\本地Mod测试\SkillRebalanceExpansionMod\plugins" />
+        <Copy SourceFiles="$(TargetDir)$(AssemblyName).dll" DestinationFolder="D:\Program\Steam\steamapps\common\觅长生\本地Mod测试\SkillRebalanceExpansionMod\plugins" />
+    </Target>
+</Project>

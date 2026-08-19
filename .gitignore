@@ -1,0 +1,122 @@
+# =========================
+# Build output
+# =========================
+
+bin/
+obj/
+
+# Build logs
+*.log
+
+
+# =========================
+# Visual Studio
+# =========================
+
+.vs/
+
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# JetBrains Rider
+.idea/
+
+
+# =========================
+# NuGet
+# =========================
+
+packages/
+
+*.nupkg
+*.snupkg
+
+# NuGet restore files
+project.lock.json
+project.assets.json
+
+
+# =========================
+# .NET generated files
+# =========================
+
+Generated/
+TestResult.xml
+
+*.dll
+*.exe
+
+
+# =========================
+# Test / Coverage
+# =========================
+
+TestResults/
+*.trx
+.coverage
+
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.bak
+*.swp
+draft.*
+
+~$*
+
+
+# =========================
+# OS generated files
+# =========================
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+
+# =========================
+# ReSharper
+# =========================
+
+_ReSharper*/
+*.DotSettings.user
+
+
+# =========================
+# Rider / MSBuild
+# =========================
+
+*.sln.iml
+
+
+# =========================
+# Local configuration
+# =========================
+
+*.local
+*.env
+
+
+# =========================
+# Mod development
+# =========================
+
+# Build output from BepInEx mods
+plugins/
+
+# Local game files
+Game/
+Mods/
+Archive/
