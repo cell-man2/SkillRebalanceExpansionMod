@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using SkillRebalanceExpansionMod.Models.Item;
 using SkillRebalanceExpansionMod.Models.StaticSkill;
@@ -150,6 +151,13 @@ namespace SkillRebalanceExpansionMod.Factories
 
         public static void Inject()
         {
+            // 打印实例数据
+            Main.Log.LogInfo($"===== StaticSkillInstanceData count: {staticSkillInstanceDatas.Count} =====");
+            foreach (var inst in staticSkillInstanceDatas)
+            {
+                Main.Log.LogInfo($"  id:{inst.id}, skillId:{inst.skillId}, skillLv:{inst.skillLv}, isNew:{inst.isNew}, key:{inst.key}");
+            }
+            Main.Log.LogInfo("===== End =====");
             RemoveOldStaticSkillSeid();
             foreach (StaticSkillInstanceData data in staticSkillInstanceDatas)
             {
@@ -182,54 +190,63 @@ namespace SkillRebalanceExpansionMod.Factories
             if (data.skillLv == null || data.skillLv.Count == 0) return result;
 
             int skillId;
-            bool isNew = false;
-            List<int> index = [.. data.skillLv];
+            Dictionary<int, bool> isNew = data.skillLv.ToDictionary(lv => lv, lv => true);
             if (data.realId.HasValue)
             {
                 skillId = data.realId.Value;
                 foreach (int tier in data.skillLv)
                 {
-                    if (!Registry.staticSkillIndex.ContainsKey((skillId, tier)))
-                    {
-                        Main.Log.LogWarning($"StaticSkill不存在:{skillId}-{tier}");
-                        index.Remove(tier);
-                    }
+                    isNew[tier] = !Registry.staticSkillIndex.ContainsKey((skillId, tier));
                 }
             }
             else
             {
                 skillId = GenStaticSkillId(data.localId.Value);
-                isNew = true;
             }
 
-            foreach (int tier in index)
+            foreach (int lv in data.skillLv)
             {
                 StaticSkillInstanceData parseData = new()
                 {
-                    isNew = isNew,
+                    isNew = isNew[lv],
                     key = string.IsNullOrEmpty(data.key)
                         ? string.Empty
-                        : $"{data.key}{tier}",
-                    id = isNew
+                        : $"{data.key}{lv}",
+                    id = isNew[lv]
                         ? ++curr
-                        : Registry.staticSkillIndex[(skillId, tier)],
+                        : Registry.staticSkillIndex[(skillId, lv)],
                     skillId = skillId,
-                    skillLv = tier,
-                    name = data.name?[tier],
-                    qingJiaoType = data.qingJiaoType?[tier],
-                    affix = data.affix?[tier],
-                    seidData = data.seidData?[tier],
-                    descr = data.descr?[tier],
-                    attackType = data.attackType?[tier],
-                    icon = data.icon?[tier],
-                    skillStyle = data.skillStyle?[tier],
-                    skillJie = data.skillJie?[tier],
-                    skillPin = data.skillPin?[tier],
-                    tuJianDescr = data.tuJianDescr?[tier],
-                    skillCastTime = data.skillCastTime?[tier],
-                    skillSpeed = data.skillSpeed?[tier],
-                    df = data.df?[tier],
-                    tuJianType = data.tuJianType?[tier]
+                    skillLv = lv,
+                    name = data.name != null && data.name.TryGetValue(lv, out var nameVal)
+                        ? nameVal : null,
+                    qingJiaoType = data.qingJiaoType != null && data.qingJiaoType.TryGetValue(lv, out var qingJiaoVal)
+                        ? qingJiaoVal : null,
+                    affix = data.affix != null && data.affix.TryGetValue(lv, out var affixVal)
+                        ? affixVal : null,
+                    seidData = data.seidData != null && data.seidData.TryGetValue(lv, out var seidVal)
+                        ? seidVal : null,
+                    descr = data.descr != null && data.descr.TryGetValue(lv, out var descrVal)
+                        ? descrVal : null,
+                    attackType = data.attackType != null && data.attackType.TryGetValue(lv, out var attackVal)
+                        ? attackVal : null,
+                    icon = data.icon != null && data.icon.TryGetValue(lv, out var iconVal)
+                        ? iconVal : null,
+                    skillStyle = data.skillStyle != null && data.skillStyle.TryGetValue(lv, out var styleVal)
+                        ? styleVal : null,
+                    skillJie = data.skillJie != null && data.skillJie.TryGetValue(lv, out var jieVal)
+                        ? jieVal : null,
+                    skillPin = data.skillPin != null && data.skillPin.TryGetValue(lv, out var pinVal)
+                        ? pinVal : null,
+                    tuJianDescr = data.tuJianDescr != null && data.tuJianDescr.TryGetValue(lv, out var tuJianVal)
+                        ? tuJianVal : null,
+                    skillCastTime = data.skillCastTime != null && data.skillCastTime.TryGetValue(lv, out var castVal)
+                        ? castVal : null,
+                    skillSpeed = data.skillSpeed != null && data.skillSpeed.TryGetValue(lv, out var speedVal)
+                        ? speedVal : null,
+                    df = data.df != null && data.df.TryGetValue(lv, out var dfVal)
+                        ? dfVal : null,
+                    tuJianType = data.tuJianType != null && data.tuJianType.TryGetValue(lv, out var tuJianTypeVal)
+                        ? tuJianTypeVal : null
                 };
                 result.Add(parseData);
             }

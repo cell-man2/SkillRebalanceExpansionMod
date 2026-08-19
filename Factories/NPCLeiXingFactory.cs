@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using SkillRebalanceExpansionMod.Utils;
 using SkillRebalanceExpansionMod.Models.NPCLeiXing;
+using System.Linq;
 
 namespace SkillRebalanceExpansionMod.Factories
 {
@@ -78,69 +79,83 @@ namespace SkillRebalanceExpansionMod.Factories
             return baseLiuPai + localLiuPai;
         }
 
-        private static List<NPCLeiXingInstanceData> ExpandNPCLeiXingData(
-            NPCLeiXingData data,
-            ref int curr
-        ) {
+        private static List<NPCLeiXingInstanceData> ExpandNPCLeiXingData(NPCLeiXingData data, ref int curr)
+        {
             List<NPCLeiXingInstanceData> result = [];
 
             if (data.level == null || data.level.Count == 0) return result;
 
             int liuPai;
-            bool isNew = false;
-            List<int> index = [.. data.level];
+            Dictionary<int, bool> isNew = data.level.ToDictionary(lv => lv, lv => true);
 
             if (data.realLiuPai.HasValue)
             {
                 liuPai = data.realLiuPai.Value;
                 foreach (int level in data.level)
                 {
-                    if (Registry.npcLeiXingIndex.ContainsKey((liuPai, level))) continue;
-                    
-                    Main.Log.LogWarning($"NPCLeiXing不存在:流派{liuPai}等级{level}");
-                    index.Remove(level);
+                    isNew[level] = !Registry.staticSkillIndex.ContainsKey((liuPai, level));
                 }
             }
             else
             {
                 liuPai = GenLiuPai(data.localLiuPai.Value);
-                isNew = true;
             }
 
-            foreach (int level in index)
+            foreach (int level in data.level)
             {
                 NPCLeiXingInstanceData instance = new()
                 {
-                    isNew = isNew,
+                    isNew = isNew[level],
                     key = string.IsNullOrEmpty(data.key)
                         ? string.Empty
                         : $"{data.key}{level}",
-                    id = isNew
+                    id = isNew[level]
                         ? ++curr
                         : Registry.npcLeiXingIndex[(liuPai, level)],
-                    type = data.type?[level],
                     liuPai = liuPai,
                     level = level,
-                    mengPai = data.mengPai?[level],
-                    skills = data.skills?[level],
-                    staticSkills = data.staticSkills?[level],
-                    jinDanType = data.jinDanType?[level],
-                    yuanYing = data.yuanYing?[level],
-                    huaShenLingYu = data.huaShenLingYu?[level],
-                    lingGen = data.lingGen?[level],
-                    wudaoType = data.wudaoType?[level],
-                    npcTag = data.npcTag?[level],
-                    canJiaPaiMai = data.canJiaPaiMai?[level],
-                    paiMaiFenZu = data.paiMaiFenZu?[level],
-                    avatarType = data.avatarType?[level],
-                    xinQuType = data.xinQuType?[level],
-                    equipWeapon = data.equipWeapon?[level],
-                    equipClothing = data.equipClothing?[level],
-                    equipRing = data.equipRing?[level],
-                    firstName = data.firstName?[level],
-                    shiLi = data.shiLi?[level],
-                    attackType = data.attackType?[level],
-                    defenseType = data.defenseType?[level]
+                    type = data.type != null && data.type.TryGetValue(level, out var typeVal)
+                        ? typeVal : null,
+                    mengPai = data.mengPai != null && data.mengPai.TryGetValue(level, out var mengPaiVal)
+                        ? mengPaiVal : null,
+                    skills = data.skills != null && data.skills.TryGetValue(level, out var skillsVal)
+                        ? skillsVal : null,
+                    staticSkills = data.staticSkills != null && data.staticSkills.TryGetValue(level, out var staticSkillsVal)
+                        ? staticSkillsVal : null,
+                    jinDanType = data.jinDanType != null && data.jinDanType.TryGetValue(level, out var jinDanTypeVal)
+                        ? jinDanTypeVal : null,
+                    yuanYing = data.yuanYing != null && data.yuanYing.TryGetValue(level, out var yuanYingVal)
+                        ? yuanYingVal : null,
+                    huaShenLingYu = data.huaShenLingYu != null && data.huaShenLingYu.TryGetValue(level, out var huaShenLingYuVal)
+                        ? huaShenLingYuVal : null,
+                    lingGen = data.lingGen != null && data.lingGen.TryGetValue(level, out var lingGenVal)
+                        ? lingGenVal : null,
+                    wudaoType = data.wudaoType != null && data.wudaoType.TryGetValue(level, out var wudaoTypeVal)
+                        ? wudaoTypeVal : null,
+                    npcTag = data.npcTag != null && data.npcTag.TryGetValue(level, out var npcTagVal)
+                        ? npcTagVal : null,
+                    canJiaPaiMai = data.canJiaPaiMai != null && data.canJiaPaiMai.TryGetValue(level, out var canJiaPaiMaiVal)
+                        ? canJiaPaiMaiVal : null,
+                    paiMaiFenZu = data.paiMaiFenZu != null && data.paiMaiFenZu.TryGetValue(level, out var paiMaiFenZuVal)
+                        ? paiMaiFenZuVal : null,
+                    avatarType = data.avatarType != null && data.avatarType.TryGetValue(level, out var avatarTypeVal)
+                        ? avatarTypeVal : null,
+                    xinQuType = data.xinQuType != null && data.xinQuType.TryGetValue(level, out var xinQuTypeVal)
+                        ? xinQuTypeVal : null,
+                    equipWeapon = data.equipWeapon != null && data.equipWeapon.TryGetValue(level, out var equipWeaponVal)
+                        ? equipWeaponVal : null,
+                    equipClothing = data.equipClothing != null && data.equipClothing.TryGetValue(level, out var equipClothingVal)
+                        ? equipClothingVal : null,
+                    equipRing = data.equipRing != null && data.equipRing.TryGetValue(level, out var equipRingVal)
+                        ? equipRingVal : null,
+                    firstName = data.firstName != null && data.firstName.TryGetValue(level, out var firstNameVal)
+                        ? firstNameVal : null,
+                    shiLi = data.shiLi != null && data.shiLi.TryGetValue(level, out var shiLiVal)
+                        ? shiLiVal : null,
+                    attackType = data.attackType != null && data.attackType.TryGetValue(level, out var attackTypeVal)
+                        ? attackTypeVal : null,
+                    defenseType = data.defenseType != null && data.defenseType.TryGetValue(level, out var defenseTypeVal)
+                        ? defenseTypeVal : null
                 };
                 result.Add(instance);
             }

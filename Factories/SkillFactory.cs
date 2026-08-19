@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using SkillRebalanceExpansionMod.Models.Skill;
 using SkillRebalanceExpansionMod.Models.Item;
 using SkillRebalanceExpansionMod.Utils;
+using System.Linq;
 
 namespace SkillRebalanceExpansionMod.Factories
 {
@@ -158,64 +159,83 @@ namespace SkillRebalanceExpansionMod.Factories
             if (data.skillLv == null || data.skillLv.Count == 0) return result;
 
             int skillId;
-            bool isNew = false;
-            List<int> index = [.. data.skillLv];
-
+            Dictionary<int, bool> isNew = data.skillLv.ToDictionary(lv => lv, lv => true);
             if (data.realId.HasValue)
             {
                 skillId = data.realId.Value;
-                foreach (int lv in data.skillLv)
+                foreach (int tier in data.skillLv)
                 {
-                    if (Registry.skillIndex.ContainsKey((skillId, lv))) continue;
-                    
-                    Main.Log.LogWarning($"Skill不存在:{skillId}-{lv}");
-                    index.Remove(lv);
+                    isNew[tier] = !Registry.staticSkillIndex.ContainsKey((skillId, tier));
                 }
             }
             else
             {
                 skillId = GenSkillId(data.localId.Value);
-                isNew = true;
             }
 
-            foreach (int lv in index)
+            foreach (int lv in data.skillLv)
             {
                 SkillInstanceData parseData = new()
                 {
-                    isNew = isNew,
+                    isNew = isNew[lv],
                     key = string.IsNullOrEmpty(data.key)
                         ? string.Empty
                         : $"{data.key}{lv}",
-                    id = isNew
+                    id = isNew[lv]
                         ? ++curr
                         : Registry.skillIndex[(skillId, lv)],
                     skillId = skillId,
                     skillLv = lv,
-                    name = data.name?[lv],
-                    qingJiaoType = data.qingJiaoType?[lv],
-                    skillEffect = data.skillEffect?[lv],
-                    skillType = data.skillType?[lv],
-                    seidData = data.seidData?[lv],
-                    aiData = data.aiData?[lv],
-                    affix = data.affix?[lv],
-                    affix2 = data.affix2?[lv],
-                    descr = data.descr?[lv],
-                    tuJianDescr = data.tuJianDescr?[lv],
-                    attackType = data.attackType?[lv],
-                    script = data.script?[lv],
-                    hp = data.hp?[lv],
-                    speed = data.speed?[lv],
-                    icon = data.icon?[lv],
-                    skillDisplayType = data.skillDisplayType?[lv],
-                    cost = data.cost?[lv],
-                    skillJie = data.skillJie?[lv],
-                    skillPin = data.skillPin?[lv],
-                    tuJianType = data.tuJianType?[lv],
-                    df = data.df?[lv],
-                    skillOpen = data.skillOpen?[lv],
-                    skillCastTime = data.skillCastTime?[lv],
-                    canUseDistMax = data.canUseDistMax?[lv],
-                    cd = data.cd?[lv]
+                    name = data.name != null && data.name.TryGetValue(lv, out var nameVal)
+                        ? nameVal : null,
+                    qingJiaoType = data.qingJiaoType != null && data.qingJiaoType.TryGetValue(lv, out var qingJiaoVal)
+                        ? qingJiaoVal : null,
+                    skillEffect = data.skillEffect != null && data.skillEffect.TryGetValue(lv, out var skillEffectVal)
+                        ? skillEffectVal : null,
+                    skillType = data.skillType != null && data.skillType.TryGetValue(lv, out var skillTypeVal)
+                        ? skillTypeVal : null,
+                    seidData = data.seidData != null && data.seidData.TryGetValue(lv, out var seidVal)
+                        ? seidVal : null,
+                    aiData = data.aiData != null && data.aiData.TryGetValue(lv, out var aiDataVal)
+                        ? aiDataVal : null,
+                    affix = data.affix != null && data.affix.TryGetValue(lv, out var affixVal)
+                        ? affixVal : null,
+                    affix2 = data.affix2 != null && data.affix2.TryGetValue(lv, out var affix2Val)
+                        ? affix2Val : null,
+                    descr = data.descr != null && data.descr.TryGetValue(lv, out var descrVal)
+                        ? descrVal : null,
+                    tuJianDescr = data.tuJianDescr != null && data.tuJianDescr.TryGetValue(lv, out var tuJianVal)
+                        ? tuJianVal : null,
+                    attackType = data.attackType != null && data.attackType.TryGetValue(lv, out var attackVal)
+                        ? attackVal : null,
+                    script = data.script != null && data.script.TryGetValue(lv, out var scriptVal)
+                        ? scriptVal : null,
+                    hp = data.hp != null && data.hp.TryGetValue(lv, out var hpVal)
+                        ? hpVal : null,
+                    speed = data.speed != null && data.speed.TryGetValue(lv, out var speedVal)
+                        ? speedVal : null,
+                    icon = data.icon != null && data.icon.TryGetValue(lv, out var iconVal)
+                        ? iconVal : null,
+                    skillDisplayType = data.skillDisplayType != null && data.skillDisplayType.TryGetValue(lv, out var skillDisplayVal)
+                        ? skillDisplayVal : null,
+                    cost = data.cost != null && data.cost.TryGetValue(lv, out var costVal)
+                        ? costVal : null,
+                    skillJie = data.skillJie != null && data.skillJie.TryGetValue(lv, out var jieVal)
+                        ? jieVal : null,
+                    skillPin = data.skillPin != null && data.skillPin.TryGetValue(lv, out var pinVal)
+                        ? pinVal : null,
+                    tuJianType = data.tuJianType != null && data.tuJianType.TryGetValue(lv, out var tuJianTypeVal)
+                        ? tuJianTypeVal : null,
+                    df = data.df != null && data.df.TryGetValue(lv, out var dfVal)
+                        ? dfVal : null,
+                    skillOpen = data.skillOpen != null && data.skillOpen.TryGetValue(lv, out var skillOpenVal)
+                        ? skillOpenVal : null,
+                    skillCastTime = data.skillCastTime != null && data.skillCastTime.TryGetValue(lv, out var castVal)
+                        ? castVal : null,
+                    canUseDistMax = data.canUseDistMax != null && data.canUseDistMax.TryGetValue(lv, out var distMaxVal)
+                        ? distMaxVal : null,
+                    cd = data.cd != null && data.cd.TryGetValue(lv, out var cdVal)
+                        ? cdVal : null
                 };
                 result.Add(parseData);
             }
