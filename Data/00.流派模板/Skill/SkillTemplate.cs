@@ -7,9 +7,9 @@
 //     [DataBase(DataCategory.Skill, "流派名称", "描述")]
 //     public static class SkillTemplate
 //     {
-//         private static readonly List<int> skillLv = new() { 1, 2, 3, 4, 5 };
+//         private static readonly List<int> skillLv = [1, 2, 3, 4, 5];
 
-//         public static List<SkillData> Data = new()
+//         public static List<SkillData> Data =
 //         [
 //             new SkillData
 //             {

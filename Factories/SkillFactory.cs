@@ -165,7 +165,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 skillId = data.realId.Value;
                 foreach (int tier in data.skillLv)
                 {
-                    isNew[tier] = !Registry.staticSkillIndex.ContainsKey((skillId, tier));
+                    isNew[tier] = !Registry.skillIndex.ContainsKey((skillId, tier));
                 }
             }
             else

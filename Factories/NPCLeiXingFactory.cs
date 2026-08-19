@@ -93,7 +93,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 liuPai = data.realLiuPai.Value;
                 foreach (int level in data.level)
                 {
-                    isNew[level] = !Registry.staticSkillIndex.ContainsKey((liuPai, level));
+                    isNew[level] = !Registry.npcLeiXingIndex.ContainsKey((liuPai, level));
                 }
             }
             else
