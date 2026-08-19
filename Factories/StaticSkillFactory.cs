@@ -151,13 +151,6 @@ namespace SkillRebalanceExpansionMod.Factories
 
         public static void Inject()
         {
-            // 打印实例数据
-            Main.Log.LogInfo($"===== StaticSkillInstanceData count: {staticSkillInstanceDatas.Count} =====");
-            foreach (var inst in staticSkillInstanceDatas)
-            {
-                Main.Log.LogInfo($"  id:{inst.id}, skillId:{inst.skillId}, skillLv:{inst.skillLv}, isNew:{inst.isNew}, key:{inst.key}");
-            }
-            Main.Log.LogInfo("===== End =====");
             RemoveOldStaticSkillSeid();
             foreach (StaticSkillInstanceData data in staticSkillInstanceDatas)
             {
