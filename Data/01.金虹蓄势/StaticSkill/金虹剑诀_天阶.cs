@@ -4,7 +4,7 @@ using SkillRebalanceExpansionMod.Utils;
 
 namespace SkillRebalanceExpansionMod.Data
 {
-    [DataBase(DataCategory.StaticSkill, "金虹剑诀", "天阶金虹剑诀")]
+    [DataBase(DataCategory.StaticSkill, "金虹蓄势", "金虹剑诀_天阶")]
     public static class 金虹剑诀_天阶
     {
         private static readonly List<int> skillLv = [1,2,3,4,5];
