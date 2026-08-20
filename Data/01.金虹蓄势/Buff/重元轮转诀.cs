@@ -31,9 +31,9 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                         {
                             {
                                 "value1",
-                                new List<object> {"@buff:重元轮转诀(获得蓄势护罩&展示)", 5, 38, 43}
+                                new List<object> {"@buff:重元轮转诀(获得蓄势护罩&展示)", 5, 38}
                             },
-                            { "value2", new List<int> {1, 1, 1, 1} }
+                            { "value2", new List<int> {1, 1, 1} }
                         }
                     }
                 }

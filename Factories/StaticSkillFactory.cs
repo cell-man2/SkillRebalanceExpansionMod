@@ -351,9 +351,9 @@ namespace SkillRebalanceExpansionMod.Factories
             // 功法图标
             if (data.icon.HasValue) staticSkill.SetField("icon", data.icon.Value);
             // 功法品级（上中下）
-            if (data.skillJie.HasValue) staticSkill.SetField("typePinJie", (int)data.skillJie.Value);
+            if (data.skillJie.HasValue) staticSkill.SetField("Skill_LV", (int)data.skillJie.Value);
             // 功法阶级（天地人）
-            if (data.skillPin.HasValue) staticSkill.SetField("Skill_LV", (int)data.skillPin.Value);
+            if (data.skillPin.HasValue) staticSkill.SetField("typePinJie", (int)data.skillPin.Value);
             // 突破用时
             if (data.skillCastTime.HasValue) staticSkill.SetField("Skill_castTime", data.skillCastTime.Value);
             // 修炼速度
