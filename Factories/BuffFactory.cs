@@ -10,7 +10,7 @@ namespace SkillRebalanceExpansionMod.Factories
         private static readonly Dictionary<string, object> defaultData = new Dictionary<string, object>
         {
             { "Affix", new List<int>() },
-            { "buffIcon", 0 },
+            { "BuffIcon", 0 },
             { "script", "Buff" },
             { "looptime", 1 },
             { "totaltime", 1 },

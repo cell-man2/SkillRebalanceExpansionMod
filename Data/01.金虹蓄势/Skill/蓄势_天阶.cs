@@ -3,7 +3,7 @@ using SkillRebalanceExpansionMod.Models.Skill;
 
 namespace SkillRebalanceExpansionMod.Data.Skill
 {
-    [DataBase(DataCategory.Skill, "金虹剑诀", "蓄势_天阶")]
+    [DataBase(DataCategory.Skill, "金虹蓄势", "蓄势_天阶")]
     public static class 蓄势_天阶
     {
         private static readonly List<int> skillLv = [1, 2, 3, 4, 5];
