@@ -9,6 +9,8 @@ namespace SkillRebalanceExpansionMod.Data
     {
         private static readonly List<int> skillLv = [1,2,3,4,5];
         private static readonly List<int> buffNum = [14,22,39,65,130];
+        private static readonly List<int> buffNum1 = [8,14,23,39,78];
+        private static readonly List<int> buffNum2 = [3,4,8,13,26];
         private static readonly List<int> castTime = [1,38,75,150,300];
 
         public static List<StaticSkillData> Data =
@@ -19,12 +21,14 @@ namespace SkillRebalanceExpansionMod.Data
                 realId = 18,
                 skillLv = skillLv,
                 descr = TierValue<string>.Create(
-                    tier => $"释放【蓄势】技能消耗提高至五点金系灵气，并使获得的【蓄势】层数+{buffNum[tier-1]}",
+                    tier => $"释放【蓄势】技能消耗提高至五点金系灵气并额外获得【蓄势】*{buffNum1[tier-1]}，" +
+                        $"每因此增加一点灵气消耗则额外获得【蓄势】*{buffNum2[tier-1]}。",
                     skillLv
                 ),
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(
-                        $"释放【蓄势】技能消耗提高至五点金系灵气，并使获得的【蓄势】层数+{buffNum[tier-1]}"
+                        $"释放【蓄势】技能消耗提高至五点金系灵气并额外获得【蓄势】*{buffNum1[tier-1]}，" +
+                        $"每因此增加一点灵气消耗则额外获得【蓄势】*{buffNum2[tier-1]}。"
                     ),
                     skillLv
                 ),
@@ -43,17 +47,17 @@ namespace SkillRebalanceExpansionMod.Data
                                 {
                                     "value1",
                                     new List<object> {
-                                        "@buff:重元无锋功(人阶蓄势加成&展示)",
-                                        138,
-                                        "@buff:重元无锋功(天阶蓄势加成)"
+                                        "@buff:重元无锋功(天阶蓄势加成&展示)",
+                                        "@buff:重元无锋功(人阶蓄势加成)",
+                                        138
                                     }
                                 },
                                 {
                                     "value2",
                                     new List<int> {
+                                        buffNum1[tier-1],
                                         buffNum[tier-1],
-                                        1,
-                                        buffNum[tier-1]
+                                        1
                                     }
                                 }
                             }
