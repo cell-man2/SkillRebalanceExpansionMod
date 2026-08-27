@@ -5,21 +5,48 @@ using System.Linq;
 
 namespace SkillRebalanceExpansionMod.Factories
 {
+    /// <summary>
+    /// NPC 类型工厂，负责扫描所有标记为 DataCategory.NPCLeiXing 的数据类，
+    /// 将其展开为各境界实例后注入到游戏的 NPC 类型 JSON 数据中。
+    /// 定位键为 (LiuPai, Level)，与技能工厂的 (Skill_ID, Skill_Lv) 类似。
+    /// </summary>
     public static class NPCLeiXingFactory
     {
+        // ======================== 常量 ========================
+
+        /// <summary>
+        /// 新 NPC 类型实例 ID 起始基数，用于分配 NPCLeiXingDate 中的 id。
+        /// </summary>
         private const int baseId = 2500;
+
+        /// <summary>
+        /// 流派编号基数，localLiuPai 最终偏移为 baseLiuPai + localLiuPai。
+        /// 此 ID 是流派编号（LiuPai），而非实例 ID（id）。
+        /// </summary>
         private const int baseLiuPai = 680;
 
+        // ======================== 静态字段 ========================
+
+        /// <summary>
+        /// 缓存所有展开后的 NPC 类型实例数据，供 Inject 阶段使用。
+        /// </summary>
         private static readonly List<NPCLeiXingInstanceData> npcLeiXingInstanceDatas = [];
 
+        // ======================== 公开方法 ========================
+
+        /// <summary>
+        /// 初始化阶段：扫描所有 NPC 类型包数据，展开为实例并注册到 Registry。
+        /// </summary>
         public static void Initialize()
         {
             npcLeiXingInstanceDatas.Clear();
 
+            // 构建 (LiuPai, Level) → id 索引，用于判断实例是否已存在
             BuildNPCLeiXingIndex();
 
             List<NPCLeiXingData> npcLeiXingDatas = DataManager.Scan<NPCLeiXingData>(DataCategory.NPCLeiXing);
 
+            // 排序确保 realLiuPai 优先，保证 ID 稳定性
             npcLeiXingDatas.Sort((a, b) =>
             {
                 bool aReal = a.realLiuPai.HasValue;
@@ -35,12 +62,14 @@ namespace SkillRebalanceExpansionMod.Factories
             int currentId = baseId;
             foreach (NPCLeiXingData data in npcLeiXingDatas)
             {
+                // 展开为多个境界实例
                 List<NPCLeiXingInstanceData> instances = ExpandNPCLeiXingData(data, ref currentId);
 
                 foreach (NPCLeiXingInstanceData instance in instances)
                 {
                     npcLeiXingInstanceDatas.Add(instance);
 
+                    // 注册实例 key → id（用于 "@npcLeiXing:xxx" 引用）
                     if (string.IsNullOrEmpty(instance.key)) continue;
                     if (Registry.npcLeiXing.ContainsKey(instance.key))
                     {
@@ -53,6 +82,9 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 注入阶段：将 NPC 类型实例数据写入游戏 JSON。
+        /// </summary>
         public static void Inject()
         {
             foreach (NPCLeiXingInstanceData data in npcLeiXingInstanceDatas)
@@ -62,6 +94,12 @@ namespace SkillRebalanceExpansionMod.Factories
             npcLeiXingInstanceDatas.Clear();
         }
 
+        // ======================== 私有方法（按执行顺序排列） ========================
+
+        /// <summary>
+        /// 从游戏现有的 NPCLeiXingDate 中构建 (LiuPai, Level) → id 索引。
+        /// 用于判断某个境界的 NPC 类型是否已存在。
+        /// </summary>
         private static void BuildNPCLeiXingIndex()
         {
             foreach (JSONObject json in jsonData.instance.NPCLeiXingDate.list)
@@ -74,11 +112,19 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 生成流派编号（LiuPai）：baseLiuPai + localLiuPai。
+        /// </summary>
         private static int GenLiuPai(int localLiuPai)
         {
             return baseLiuPai + localLiuPai;
         }
 
+        /// <summary>
+        /// 将 NPCLeiXingData 展开为多个 NPCLeiXingInstanceData。
+        /// 每个 level 对应一个实例。
+        /// 新实例分配递增 id，已存在实例复用旧 id。
+        /// </summary>
         private static List<NPCLeiXingInstanceData> ExpandNPCLeiXingData(NPCLeiXingData data, ref int curr)
         {
             List<NPCLeiXingInstanceData> result = [];
@@ -106,6 +152,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 NPCLeiXingInstanceData instance = new()
                 {
                     isNew = isNew[level],
+                    // 实例 key = 包 key + 等级数字
                     key = string.IsNullOrEmpty(data.key)
                         ? string.Empty
                         : $"{data.key}{level}",
@@ -162,6 +209,10 @@ namespace SkillRebalanceExpansionMod.Factories
             return result;
         }
 
+        /// <summary>
+        /// 构建一个仅包含 id、LiuPai、Level 的新 NPC 类型 JSON 对象。
+        /// 无默认数据，所有字段由 ApplyNPCLeiXingData 填充。
+        /// </summary>
         private static JSONObject BuildNewNPCLeiXing(NPCLeiXingInstanceData data)
         {
             JSONObject npc = JSONObject.Create(JSONObject.Type.OBJECT);
@@ -173,16 +224,19 @@ namespace SkillRebalanceExpansionMod.Factories
             return npc;
         }
 
+        /// <summary>
+        /// 将 NPCLeiXingInstanceData 中的非空字段应用到 JSON 对象上。
+        /// </summary>
         private static void ApplyNPCLeiXingData(
             JSONObject npc,
             NPCLeiXingInstanceData data
         )
         {
-            // NPC类型
+            // type → Type
             if (data.type.HasValue) npc.SetField("Type", (int)data.type.Value);
-            // NPC势力
+            // mengPai → MengPai
             if (data.mengPai.HasValue) npc.SetField("MengPai", (int)data.mengPai.Value);
-            // 技能
+            // skills → skills（支持字符串引用）
             if (data.skills != null)
             {
                 JSONObject skills = JSONObject.Create(JSONObject.Type.ARRAY);
@@ -199,7 +253,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 }
                 npc.SetField("skills", skills);
             }
-            // 功法
+            // staticSkills → staticSkills（支持字符串引用）
             if (data.staticSkills != null)
             {
                 JSONObject staticSkills = JSONObject.Create(JSONObject.Type.ARRAY);
@@ -216,7 +270,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 }
                 npc.SetField("staticSkills", staticSkills);
             }
-            // 金丹类型
+            // jinDanType → JinDanType
             if (data.jinDanType != null)
             {
                 npc.SetField(
@@ -226,7 +280,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     )
                 );
             }
-            // 元婴功法
+            // yuanYing → yuanying（支持字符串引用）
             if (data.yuanYing != null)
             {
                 if (Registry.Resolve(data.yuanYing) is int id)
@@ -238,13 +292,13 @@ namespace SkillRebalanceExpansionMod.Factories
                     Main.Log.LogWarning($"NPCLeiXing元婴功法引用无效:{data.yuanYing}");
                 }
             }
-            // 化神领域
+            // huaShenLingYu → HuaShenLingYu
             if (data.huaShenLingYu.HasValue) npc.SetField("HuaShenLingYu",(int)data.huaShenLingYu.Value);
-            // 灵根
+            // lingGen → LingGen
             if (data.lingGen != null) npc.SetField("LingGen", JSONObjectHelper.ToJSONObject(data.lingGen));
-            // 悟道类型
+            // wudaoType → wudaoType
             if (data.wudaoType.HasValue) npc.SetField("wudaoType", data.wudaoType.Value);
-            // 标签
+            // npcTag → NPCTag
             if (data.npcTag != null)
             {
                 npc.SetField(
@@ -254,7 +308,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     )
                 );
             }
-            // 是否参加拍卖
+            // canJiaPaiMai → canjiaPaiMai（true = 参加，写入 0；false = 不参加，写入 1）
             if (data.canJiaPaiMai.HasValue)
             {
                 npc.SetField(
@@ -262,7 +316,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     data.canJiaPaiMai.Value ? 0 : 1
                 );
             }
-            // 拍卖分组
+            // paiMaiFenZu → paimaifenzu
             if (data.paiMaiFenZu != null)
             {
                 npc.SetField(
@@ -272,7 +326,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     )
                 );
             }
-            // 种族
+            // avatarType → AvatarType
             if (data.avatarType.HasValue)
             {
                 npc.SetField(
@@ -280,7 +334,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     (int)data.avatarType.Value
                 );
             }
-            // 感兴趣物品
+            // xinQuType → XinQuType
             if (data.xinQuType.HasValue)
             {
                 npc.SetField(
@@ -288,7 +342,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     data.xinQuType.Value
                 );
             }
-            // 装备偏好
+            // equipWeapon → equipWeapon
             if (data.equipWeapon != null)
             {
                 npc.SetField(
@@ -296,12 +350,13 @@ namespace SkillRebalanceExpansionMod.Factories
                     JSONObjectHelper.ToJSONObject(data.equipWeapon)
                 );
             }
+            // equipClothing → equipClothing
             if (data.equipClothing != null)
                 npc.SetField(
                     "equipClothing",
                     JSONObjectHelper.ToJSONObject(data.equipClothing)
                 );
-
+            // equipRing → equipRing
             if (data.equipRing != null)
             {
                 npc.SetField(
@@ -309,7 +364,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     JSONObjectHelper.ToJSONObject(data.equipRing)
                 );
             }
-            // 姓
+            // firstName → FirstName
             if (!string.IsNullOrEmpty(data.firstName))
             {
                 npc.SetField(
@@ -317,7 +372,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     data.firstName
                 );
             }
-            // 战斗力
+            // shiLi → ShiLi
             if (data.shiLi != null)
             {
                 npc.SetField(
@@ -325,7 +380,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     JSONObjectHelper.ToJSONObject(data.shiLi)
                 );
             }
-            // 攻击类型
+            // attackType → AttackType
             if (data.attackType.HasValue)
             {
                 npc.SetField(
@@ -333,7 +388,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     data.attackType.Value
                 );
             }
-            // 防御类型
+            // defenseType → DefenseType
             if (data.defenseType.HasValue)
             {
                 npc.SetField(
@@ -343,6 +398,10 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 将单个 NPC 类型实例注入到 NPCLeiXingDate 中。
+        /// 若 isNew 为 true 则新建，否则更新已有对象。
+        /// </summary>
         private static void InjectNPCLeiXingData(
             NPCLeiXingInstanceData data
         )
@@ -363,6 +422,5 @@ namespace SkillRebalanceExpansionMod.Factories
 
             ApplyNPCLeiXingData(npc, data);
         }
-
     }
 }

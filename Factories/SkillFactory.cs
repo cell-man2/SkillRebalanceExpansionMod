@@ -6,10 +6,31 @@ using System.Linq;
 
 namespace SkillRebalanceExpansionMod.Factories
 {
+    /// <summary>
+    /// 神通工厂，负责扫描所有标记为 DataCategory.Skill 的数据类，
+    /// 将其展开为各等级实例后注入到游戏的神通 JSON 数据中。
+    /// 与功法工厂类似，但额外处理 AI 行为数据（敌人出手权）。
+    /// </summary>
     public static class SkillFactory
     {
+        // ======================== 常量 ========================
+
+        /// <summary>
+        /// 新神通实例 ID 起始基数，用于分配 _skillJsonData 中的 id。
+        /// </summary>
         private const int baseId = 41750;
+
+        /// <summary>
+        /// 技能编号基数，localId 最终偏移为 baseSkillId + localId。
+        /// 此 ID 是技能编号（Skill_ID），而非实例 ID（id）。
+        /// </summary>
         private const int baseSkillId = 4370;
+
+        // ======================== 静态字段 ========================
+
+        /// <summary>
+        /// 新建神通时的默认字段值。
+        /// </summary>
         private static readonly Dictionary<string, object> defaultData = new()
         {
             { "Affix", new List<int>() },
@@ -28,19 +49,42 @@ namespace SkillRebalanceExpansionMod.Factories
             { "TuJianType", 0 },
             { "typePinJie", 1 }
         };
+
+        /// <summary>
+        /// 记录每个 seid 编号下挂载了哪些神通实例 ID。
+        /// Key: seid 编号, Value: 使用该 seid 的神通实例 ID 集合。
+        /// 用于注入前清理旧数据，防止残留。
+        /// </summary>
         private static readonly Dictionary<int, HashSet<int>> removeSkillSeid = [];
+
+        /// <summary>
+        /// 记录每个 AI 编号下挂载了哪些神通实例 ID。
+        /// Key: AI 编号, Value: 挂载在该 AI 下的神通实例 ID 集合。
+        /// 用于注入前清理旧 AI 数据（需全量遍历 AIJsonDate 收集）。
+        /// </summary>
         private static readonly Dictionary<int, HashSet<int>> removeSkillAI = [];
+
+        /// <summary>
+        /// 缓存所有展开后的神通实例数据，供 Inject 阶段使用。
+        /// </summary>
         private static readonly List<SkillInstanceData> skillInstanceDatas = [];
 
+        // ======================== 公开方法 ========================
+
+        /// <summary>
+        /// 初始化阶段：扫描所有神通包数据，展开为实例并注册到 Registry。
+        /// </summary>
         public static void Initialize()
         {
             removeSkillSeid.Clear();
             removeSkillAI.Clear();
             skillInstanceDatas.Clear();
 
+            // 构建 (Skill_ID, Skill_Lv) → id 索引，用于判断实例是否已存在
             BuildSkillIndex();
 
             List<SkillData> skillDatas = DataManager.Scan<SkillData>(DataCategory.Skill);
+            // 排序确保 realId 优先，保证 ID 稳定性
             skillDatas.Sort((a, b) =>
             {
                 bool aReal = a.realId.HasValue;
@@ -58,22 +102,26 @@ namespace SkillRebalanceExpansionMod.Factories
                 int? jie = null;
                 int? pin = null;
 
+                // 展开为多个等级实例
                 List<SkillInstanceData> instances = ExpandSkillData(data, ref currentId);
 
                 foreach (SkillInstanceData instance in instances)
                 {
+                    // 记录 skillId、jie、pin 用于注册 BookInfo
                     if (skillId == null) skillId = instance.skillId;
                     if (jie == null && instance.skillJie.HasValue) jie = (int)instance.skillJie;
                     if (pin == null && instance.skillPin.HasValue) pin = (int)instance.skillPin;
 
                     skillInstanceDatas.Add(instance);
 
+                    // 已存在的实例需要收集旧 seid 和旧 AI 数据供清理
                     if (!instance.isNew)
                     {
                         if (instance.seidData != null) RegisterRemoveSkillSeid(instance);
                         if (instance.aiData != null) RegisterRemoveSkillAI(instance);
                     }
 
+                    // 注册实例 key → id（用于 "@skill:xxx" 引用）
                     if (string.IsNullOrEmpty(instance.key)) continue;
                     if (Registry.skill.ContainsKey(instance.key))
                     {
@@ -84,6 +132,7 @@ namespace SkillRebalanceExpansionMod.Factories
                     Registry.skill.Add(instance.key, instance.id);
                 }
 
+                // 注册包数据 key → skillId（用于 "@sId:xxx" 和 "@bookInfo:xxx" 引用）
                 if (skillId.HasValue)
                 {
                     if (Registry.sId.TryGetValue(data.key, out int oldId))
@@ -122,6 +171,9 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 注入阶段：将神通实例数据写入游戏 JSON。
+        /// </summary>
         public static void Inject()
         {
             RemoveOldSkillSeid();
@@ -135,11 +187,20 @@ namespace SkillRebalanceExpansionMod.Factories
             skillInstanceDatas.Clear();
         }
 
+        // ======================== 私有方法（按执行顺序排列） ========================
+
+        /// <summary>
+        /// 生成技能编号（Skill_ID）：baseSkillId + localId。
+        /// </summary>
         private static int GenSkillId(int localId)
         {
             return baseSkillId + localId;
         }
 
+        /// <summary>
+        /// 从游戏现有的 _skillJsonData 中构建 (Skill_ID, Skill_Lv) → id 索引。
+        /// 用于判断某个等级的神通是否已存在。
+        /// </summary>
         private static void BuildSkillIndex()
         {
             foreach (JSONObject json in jsonData.instance._skillJsonData.list)
@@ -152,6 +213,11 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 将 SkillData 展开为多个 SkillInstanceData。
+        /// 每个 skillLv 对应一个实例。
+        /// 新实例分配递增 id，已存在实例复用旧 id。
+        /// </summary>
         private static List<SkillInstanceData> ExpandSkillData(SkillData data, ref int curr)
         {
             List<SkillInstanceData> result = [];
@@ -178,6 +244,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 SkillInstanceData parseData = new()
                 {
                     isNew = isNew[lv],
+                    // 实例 key = 包 key + 等级数字
                     key = string.IsNullOrEmpty(data.key)
                         ? string.Empty
                         : $"{data.key}{lv}",
@@ -241,7 +308,11 @@ namespace SkillRebalanceExpansionMod.Factories
             }
             return result;
         }
-    
+
+        /// <summary>
+        /// 从游戏现有的 _skillJsonData 中读取该神通实例已挂载的 seid 列表，
+        /// 记录到 removeSkillSeid 中供后续清理。
+        /// </summary>
         private static void RegisterRemoveSkillSeid(SkillInstanceData data)
         {
             JSONObject skill = jsonData.instance._skillJsonData.GetField(data.id.ToString());
@@ -258,6 +329,11 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 遍历所有 AIJsonDate，检查该神通实例 ID 是否挂载在某个 AI 下。
+        /// 若有则记录到 removeSkillAI 中供后续清理。
+        /// 由于 AI 数据不存储于技能本体，需全量遍历。
+        /// </summary>
         private static void RegisterRemoveSkillAI(SkillInstanceData data)
         {
             Dictionary<int, JSONObject> aiJsonData = jsonData.instance.AIJsonDate;
@@ -274,6 +350,9 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 从各 seid 表中移除旧神通实例的 seid 数据。
+        /// </summary>
         private static void RemoveOldSkillSeid()
         {
             foreach (var pair in removeSkillSeid)
@@ -287,6 +366,9 @@ namespace SkillRebalanceExpansionMod.Factories
             removeSkillSeid.Clear();
         }
 
+        /// <summary>
+        /// 从各 AI 表中移除旧神通实例的 AI 数据。
+        /// </summary>
         private static void RemoveOldSkillAI()
         {
             foreach (var pair in removeSkillAI)
@@ -302,6 +384,9 @@ namespace SkillRebalanceExpansionMod.Factories
             removeSkillAI.Clear();
         }
 
+        /// <summary>
+        /// 构建一个带有默认值的新神通 JSON 对象。
+        /// </summary>
         private static JSONObject BuildNewSkill(SkillInstanceData data)
         {
             JSONObject skill = JSONObject.Create(JSONObject.Type.OBJECT);
@@ -319,10 +404,15 @@ namespace SkillRebalanceExpansionMod.Factories
             return skill;
         }
 
+        /// <summary>
+        /// 初始化新神通实例：从描述中提取词缀和图鉴描述（若未单独指定）。
+        /// 仅在新建实例时调用。
+        /// </summary>
         private static void InitNewSkill(JSONObject skill, SkillInstanceData data)
         {
             if (string.IsNullOrEmpty(data.descr)) return;
 
+            // 从描述中自动提取词缀（写入 Affix2）
             if (data.affix2 == null)
             {
                 skill.SetField(
@@ -331,6 +421,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 );
             }
 
+            // 从描述中自动生成图鉴描述
             if (string.IsNullOrEmpty(data.tuJianDescr))
             {
                 skill.SetField(
@@ -340,31 +431,34 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 将 SkillInstanceData 中的非空字段应用到 JSON 对象上。
+        /// </summary>
         private static void ApplySkillData(JSONObject skill, SkillInstanceData data)
         {
-            // 神通名称
+            // name → name
             if (!string.IsNullOrEmpty(data.name)) skill.SetField("name", data.name);
-            // 请教类型
+            // qingJiaoType → qingjiaotype
             if (data.qingJiaoType.HasValue) skill.SetField("qingjiaotype", (int)data.qingJiaoType.Value);
-            // 神通特效
+            // skillEffect → skillEffect
             if (!string.IsNullOrEmpty(data.skillEffect)) skill.SetField("skillEffect", data.skillEffect);
-            // 神通类型
+            // skillType → Skill_Type
             if (data.skillType.HasValue) skill.SetField("Skill_Type", (int)data.skillType.Value);
-            // 词缀
+            // affix → Affix
             if (data.affix != null)
             {
                 skill.SetField("Affix", JSONObjectHelper.ToJSONObject(data.affix));
             }
-            // 第二词缀
+            // affix2 → Affix2
             if (data.affix2 != null)
             {
                 skill.SetField("Affix2", JSONObjectHelper.ToJSONObject(data.affix2));
             }
-            // 神通描述
+            // descr → descr
             if (!string.IsNullOrEmpty(data.descr)) skill.SetField("descr", data.descr);
-            // 神通图鉴描述
+            // tuJianDescr → TuJiandescr
             if (!string.IsNullOrEmpty(data.tuJianDescr)) skill.SetField("TuJiandescr", data.tuJianDescr);
-            // 神通属性
+            // attackType → AttackType
             if (data.attackType != null)
             {
                 skill.SetField(
@@ -372,40 +466,40 @@ namespace SkillRebalanceExpansionMod.Factories
                     JSONObjectHelper.ToJSONObject(data.attackType.ConvertAll(type => (int)type))
                 );
             }
-            // 技能脚本
+            // script → script（"SkillSelf" / "SkillAttack"）
             if (data.script.HasValue) skill.SetField(
                 "script",
                 data.script.Value == Script.对自己 ? "SkillSelf" : "SkillAttack"
             );
-            // 伤害
+            // hp → HP
             if (data.hp.HasValue) skill.SetField("HP", data.hp.Value);
-            // 速度
+            // speed → speed
             if (data.speed.HasValue) skill.SetField("speed", data.speed.Value);
-            // 图标
+            // icon → icon
             if (data.icon.HasValue) skill.SetField("icon", data.icon.Value);
-            // 释放方式
+            // skillDisplayType → Skill_DisplayType
             if (data.skillDisplayType.HasValue)
                 skill.SetField(
                     "Skill_DisplayType",
                     (int)data.skillDisplayType.Value
                 );
-            // 神通阶级
+            // skillJie → Skill_LV
             if (data.skillJie.HasValue) skill.SetField("Skill_LV", (int)data.skillJie.Value);
-            // 神通品级
+            // skillPin → typePinJie
             if (data.skillPin.HasValue) skill.SetField("typePinJie", (int)data.skillPin.Value);
-            // 图鉴类型
+            // tuJianType → TuJianType
             if (data.tuJianType.HasValue) skill.SetField("TuJianType", (int)data.tuJianType.Value);
-            // 神仙斗法
+            // df → DF
             if (data.df.HasValue) skill.SetField("DF", data.df.Value ? 1 : 0);
-            // 技能开放
+            // skillOpen → Skill_Open
             if (data.skillOpen.HasValue) skill.SetField("Skill_Open", data.skillOpen.Value);
-            // 施法时间
+            // skillCastTime → Skill_castTime
             if (data.skillCastTime.HasValue) skill.SetField("Skill_castTime", data.skillCastTime.Value);
-            // 最大施法距离
+            // canUseDistMax → canUseDistMax
             if (data.canUseDistMax.HasValue) skill.SetField("canUseDistMax", data.canUseDistMax.Value);
-            // 冷却时间
+            // cd → CD
             if (data.cd.HasValue) skill.SetField("CD", data.cd.Value);
-            // 神通特性 Seid
+            // seidData → seid
             if (data.seidData != null)
             {
                 JSONObject seid = JSONObject.Create(JSONObject.Type.ARRAY);
@@ -421,7 +515,9 @@ namespace SkillRebalanceExpansionMod.Factories
                 }
                 skill.SetField("seid", seid);
             }
-            // 灵气消耗
+            // cost → skill_SameCastNum + skill_CastType + skill_Cast
+            // 同系灵气（CardType.同）写入 skill_SameCastNum，可重复添加（多组同系消耗）
+            // 元素灵气按类型累加后写入 skill_CastType + skill_Cast
             if (data.cost != null)
             {
                 JSONObject sameCastNum = JSONObject.Create(JSONObject.Type.ARRAY);
@@ -452,7 +548,11 @@ namespace SkillRebalanceExpansionMod.Factories
                 skill.SetField("skill_Cast", cast);
             }
         }
-            
+
+        /// <summary>
+        /// 将单个神通实例注入到 _skillJsonData 中。
+        /// 若 isNew 为 true 则新建，否则更新已有对象。
+        /// </summary>
         private static void InjectSkillData(SkillInstanceData data)
         {
             string id = data.id.ToString();
@@ -474,6 +574,9 @@ namespace SkillRebalanceExpansionMod.Factories
             ApplySkillData(skill, data);
         }
 
+        /// <summary>
+        /// 将神通实例的 seid 特性数据注入到 SkillSeidJsonData 中。
+        /// </summary>
         private static void InjectSkillSeid(SkillInstanceData data)
         {
             if (data.seidData == null || data.seidData.Count == 0) return;
@@ -519,6 +622,9 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 将神通实例的 AI 行为数据注入到 AIJsonDate 中。
+        /// </summary>
         private static void InjectSkillAI(SkillInstanceData data)
         {
             if (data.aiData == null || data.aiData.Count == 0) return;
@@ -555,6 +661,5 @@ namespace SkillRebalanceExpansionMod.Factories
                 aiTable.SetField(data.id.ToString(), aiJson);
             }
         }
-
     }
 }

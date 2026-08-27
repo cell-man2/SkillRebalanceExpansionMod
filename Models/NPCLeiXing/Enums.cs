@@ -1,6 +1,8 @@
 namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
 {
-    // npc类型，对应Type
+    /// <summary>
+    /// NPC 类型（所属门派/势力），对应 JSON 字段 Type。
+    /// </summary>
     public enum Type
     {
         竹山 = 1,
@@ -29,7 +31,9 @@ namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
         万魂殿 = 25
     }
 
-    // npc流派，对应LiuPai
+    /// <summary>
+    /// NPC 流派（决定 NPC 的战斗风格与配置），对应 JSON 字段 LiuPai。
+    /// </summary>
     public enum LiuPai
     {
         竹山五行 = 1,
@@ -100,7 +104,9 @@ namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
         万魂殿 = 251
     }
 
-    // npc所属门派，五大派或无，对应MengPai
+    /// <summary>
+    /// NPC 所属门派，对应 JSON 字段 MengPai。
+    /// </summary>
     public enum MengPai
     {
         非门派修士 = 0,
@@ -111,7 +117,9 @@ namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
         化尘教 = 6
     }
 
-    // 金丹类型，对应 JinDanType
+    /// <summary>
+    /// 金丹类型，对应 JSON 字段 JinDanType。
+    /// </summary>
     public enum JinDanType
     {
         金源 = 0,
@@ -122,7 +130,9 @@ namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
         混沌 = 5
     }
 
-    // 化神领域，对应 HuaShenLingYu
+    /// <summary>
+    /// 化神领域（化神期 NPC 的领域类型），对应 JSON 字段 HuaShenLingYu。
+    /// </summary>
     public enum HuaShenLingYu
     {
         以金入道 = 1201,
@@ -136,7 +146,9 @@ namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
         以气入道 = 1209
     }
 
-    // NPC标签，对应 NPCTag
+    /// <summary>
+    /// NPC 行为标签（影响 NPC 的行为偏好），对应 JSON 字段 NPCTag。
+    /// </summary>
     public enum NPCTag
     {
         门派勤奋修炼型 = 1,
@@ -160,14 +172,18 @@ namespace SkillRebalanceExpansionMod.Models.NPCLeiXing
         邪修和魔修 = 51
     }
 
-    // 拍卖分组，对应 paimaifenzu
+    /// <summary>
+    /// 拍卖分组（决定 NPC 出现在哪个区域的拍卖会），对应 JSON 字段 paimaifenzu。
+    /// </summary>
     public enum PaiMaiFenZu
     {
         宁州 = 1,
         海外 = 2
     }
 
-    // 种族，对应 AvatarType
+    /// <summary>
+    /// 种族，对应 JSON 字段 AvatarType。
+    /// </summary>
     public enum AvatarType
     {
         人 = 1,

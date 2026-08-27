@@ -4,10 +4,29 @@ using SkillRebalanceExpansionMod.Utils;
 
 namespace SkillRebalanceExpansionMod.Factories
 {
+    /// <summary>
+    /// 物品工厂，负责扫描所有标记为 DataCategory.Item 的数据类，
+    /// 将其注入到游戏的物品 JSON 数据中。
+    /// </summary>
     public static class ItemFactory
     {
+        // ======================== 常量 ========================
+
+        /// <summary>
+        /// 物品 ID 基数，localId 最终偏移为 baseId + localId。
+        /// </summary>
         private const int baseId = 28500;
+
+        /// <summary>
+        /// 请教版本物品 ID 偏移量，用于区分常规物品与请教版本。
+        /// </summary>
         private const int qingJiaoOffset = 1000000000;
+
+        // ======================== 静态字段 ========================
+
+        /// <summary>
+        /// 新建物品时的默认字段值。
+        /// </summary>
         private static readonly Dictionary<string, object> defaultData = new()
         {
             { "ItemIcon", 0 },
@@ -17,7 +36,6 @@ namespace SkillRebalanceExpansionMod.Factories
             { "typePinJie", 1 },
             { "StuTime", 0 },
             { "CanSale", 0 },
-            { "seid", new List<int>() },
             { "vagueType", 1 },
             { "price", 0 },
             { "wuDao", new List<int>() },
@@ -34,9 +52,24 @@ namespace SkillRebalanceExpansionMod.Factories
             { "yaoZhi2", 0 },
             { "yaoZhi3", 0 }
         };
+
+        /// <summary>
+        /// 缓存所有扫描到的 ItemData，供 Inject 阶段使用。
+        /// </summary>
         private static readonly List<ItemData> itemDatas = [];
+
+        /// <summary>
+        /// 记录每个 seid 编号下挂载了哪些物品 ID。
+        /// Key: seid 编号, Value: 使用该 seid 的物品 ID 集合。
+        /// 用于注入前清理旧数据，防止残留。
+        /// </summary>
         private static readonly Dictionary<int, HashSet<int>> removeItemSeid = [];
 
+        // ======================== 工具函数 ========================
+
+        /// <summary>
+        /// 根据 BookInfo 计算物品价格。
+        /// </summary>
         private static int CaculatePrice(BookInfo info)
         {
             if (!info.jie.HasValue || !info.pin.HasValue) return 0;
@@ -100,6 +133,9 @@ namespace SkillRebalanceExpansionMod.Factories
             return 0;
         }
 
+        /// <summary>
+        /// 根据 BookInfo 计算领悟时间。
+        /// </summary>
         private static int CaculateStuTime(BookInfo info)
         {
             if (!info.jie.HasValue || !info.pin.HasValue) return 0;
@@ -163,6 +199,11 @@ namespace SkillRebalanceExpansionMod.Factories
             return 0;
         }
 
+        // ======================== 公开方法 ========================
+
+        /// <summary>
+        /// 初始化阶段：扫描所有物品数据并注册到 Registry。
+        /// </summary>
         public static void Initialize()
         {
             itemDatas.Clear();
@@ -193,6 +234,9 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 注入阶段：将物品数据写入游戏 JSON。
+        /// </summary>
         public static void Inject()
         {
             RemoveOldItemSeid();
@@ -202,8 +246,16 @@ namespace SkillRebalanceExpansionMod.Factories
                 InjectItemData(data);
                 InjectItemSeid(data);
             }
+
+            itemDatas.Clear();
         }
 
+        // ======================== 私有方法（按执行顺序排列） ========================
+
+        /// <summary>
+        /// 生成实际 ID：baseId + localId，若 qingJiao 为 true 则额外加上 qingJiaoOffset。
+        /// 若 realId 已存在且大于 qingJiaoOffset（即已偏移过），则跳过生成。
+        /// </summary>
         private static void GenId(ItemData data)
         {
             if (data.realId.HasValue && data.realId.Value > qingJiaoOffset) return;
@@ -212,6 +264,10 @@ namespace SkillRebalanceExpansionMod.Factories
             data.realId += data.qingJiao ? qingJiaoOffset : 0;
         }
 
+        /// <summary>
+        /// 从游戏现有的 _ItemJsonData 中读取该物品已挂载的 seid 列表，
+        /// 记录到 removeItemSeid 中供后续清理。
+        /// </summary>
         private static void RegisterRemoveItemSeid(ItemData data)
         {
             JSONObject json = jsonData.instance._ItemJsonData;
@@ -235,6 +291,9 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 从各 seid 表中移除旧物品的 seid 数据。
+        /// </summary>
         private static void RemoveOldItemSeid()
         {
             foreach (var pair in removeItemSeid)
@@ -248,6 +307,9 @@ namespace SkillRebalanceExpansionMod.Factories
             removeItemSeid.Clear();
         }
 
+        /// <summary>
+        /// 构建一个带有默认值的新物品 JSON 对象。
+        /// </summary>
         private static JSONObject BuildNewItem(ItemData data)
         {
             JSONObject item = JSONObject.Create(JSONObject.Type.OBJECT);
@@ -263,6 +325,10 @@ namespace SkillRebalanceExpansionMod.Factories
             return item;
         }
 
+        /// <summary>
+        /// 初始化技能书/功法书类物品，从 BookInfo 中自动填充相关字段。
+        /// 仅在新建物品时调用（ID 不存在时）。
+        /// </summary>
         private static void InitNewItem(JSONObject item, ItemData data)
         {
             if (string.IsNullOrEmpty(data.skillKey)) return;
@@ -301,41 +367,12 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 将 ItemData 中的非空字段应用到 JSON 对象上。
+        /// </summary>
         private static void ApplyItemData(JSONObject item, ItemData data)
         {
-            if (data.name != null) item.SetField("name", data.name);
-            if (data.itemIcon.HasValue) item.SetField("ItemIcon", data.itemIcon.Value);
-            if (data.maxNum.HasValue) item.SetField("maxNum", data.maxNum.Value);
-            if (data.type.HasValue) item.SetField("type", (int)data.type.Value);
-            if (data.quality.HasValue) item.SetField("quality", data.quality.Value);
-            if (data.typePinJie.HasValue) item.SetField("typePinJie", data.typePinJie.Value);
-            if (data.tuJianType.HasValue) item.SetField("TuJianType", (int)data.tuJianType.Value);
-            if (data.shopType.HasValue) item.SetField("ShopType", (int)data.shopType.Value);
-            if (data.itemFlag != null)
-            {
-                JSONObject itemFlag = JSONObject.Create(JSONObject.Type.ARRAY);
-                foreach (ItemFlag flag in data.itemFlag)
-                {
-                    itemFlag.Add((int)flag);
-                }
-                item.SetField("ItemFlag", itemFlag);
-            }
-            if (data.stuTime.HasValue) item.SetField("StuTime", data.stuTime.Value);
-            if (data.wuDao != null)
-            {
-                JSONObject wuDao = JSONObject.Create(JSONObject.Type.ARRAY);
-                foreach ((DaoType type, DaoLevel level) in data.wuDao)
-                {
-                    wuDao.Add((int)type);
-                    wuDao.Add((int)level);
-                }
-                item.SetField("wuDao", wuDao);
-            }
-            if (data.desc != null) item.SetField("desc", data.desc);
-            if (data.desc2 != null) item.SetField("desc2", data.desc2);
-            if (data.price.HasValue) item.SetField("price", data.price.Value);
-            if (data.canSale.HasValue) item.SetField("CanSale", data.canSale.Value ? 0 : 1);
-            if (data.faBaoType != null) item.SetField("FaBaoType", data.faBaoType);
+            // affix → Affix
             if (data.affix != null)
             {
                 JSONObject affix = JSONObject.Create(JSONObject.Type.ARRAY);
@@ -345,16 +382,41 @@ namespace SkillRebalanceExpansionMod.Factories
                 }
                 item.SetField("Affix", affix);
             }
-            if (data.vagueType.HasValue) item.SetField("vagueType", data.vagueType.Value);
+            // canSale → CanSale（false = 可出售，true = 不可出售）
+            if (data.canSale.HasValue) item.SetField("CanSale", data.canSale.Value ? 0 : 1);
+            // canUse → CanUse
             if (data.canUse.HasValue) item.SetField("CanUse", data.canUse.Value);
+            // danDu → DanDu
             if (data.danDu.HasValue) item.SetField("DanDu", data.danDu.Value);
+            // desc → desc
+            if (data.desc != null) item.SetField("desc", data.desc);
+            // desc2 → desc2
+            if (data.desc2 != null) item.SetField("desc2", data.desc2);
+            // faBaoType → FaBaoType
+            if (data.faBaoType != null) item.SetField("FaBaoType", data.faBaoType);
+            // itemFlag → ItemFlag
+            if (data.itemFlag != null)
+            {
+                JSONObject itemFlag = JSONObject.Create(JSONObject.Type.ARRAY);
+                foreach (ItemFlag flag in data.itemFlag)
+                {
+                    itemFlag.Add((int)flag);
+                }
+                item.SetField("ItemFlag", itemFlag);
+            }
+            // itemIcon → ItemIcon
+            if (data.itemIcon.HasValue) item.SetField("ItemIcon", data.itemIcon.Value);
+            // maxNum → maxNum
+            if (data.maxNum.HasValue) item.SetField("maxNum", data.maxNum.Value);
+            // name → name
+            if (data.name != null) item.SetField("name", data.name);
+            // npcCanUse → NPCCanUse
             if (data.npcCanUse.HasValue) item.SetField("NPCCanUse", data.npcCanUse.Value ? 1 : 0);
-            if (data.shuXingType.HasValue) item.SetField("ShuXingType", data.shuXingType.Value);
-            if (data.wuWeiType.HasValue) item.SetField("WuWeiType", data.wuWeiType.Value);
-            if (data.shuaXin.HasValue) item.SetField("ShuaXin", data.shuaXin.Value);
-            if (data.yaoZhi1.HasValue) item.SetField("yaoZhi1", data.yaoZhi1.Value);
-            if (data.yaoZhi2.HasValue) item.SetField("yaoZhi2", data.yaoZhi2.Value);
-            if (data.yaoZhi3.HasValue) item.SetField("yaoZhi3", data.yaoZhi3.Value);
+            // price → price
+            if (data.price.HasValue) item.SetField("price", data.price.Value);
+            // quality → quality
+            if (data.quality.HasValue) item.SetField("quality", data.quality.Value);
+            // seidData → seid
             if (data.seidData != null)
             {
                 JSONObject seid = JSONObject.Create(JSONObject.Type.ARRAY);
@@ -370,7 +432,43 @@ namespace SkillRebalanceExpansionMod.Factories
                 }
                 item.SetField("seid", seid);
             }
-            
+            // shopType → ShopType
+            if (data.shopType.HasValue) item.SetField("ShopType", (int)data.shopType.Value);
+            // shuaXin → ShuaXin
+            if (data.shuaXin.HasValue) item.SetField("ShuaXin", data.shuaXin.Value);
+            // shuXingType → ShuXingType
+            if (data.shuXingType.HasValue) item.SetField("ShuXingType", data.shuXingType.Value);
+            // stuTime → StuTime
+            if (data.stuTime.HasValue) item.SetField("StuTime", data.stuTime.Value);
+            // tuJianType → TuJianType
+            if (data.tuJianType.HasValue) item.SetField("TuJianType", (int)data.tuJianType.Value);
+            // type → type
+            if (data.type.HasValue) item.SetField("type", (int)data.type.Value);
+            // typePinJie → typePinJie
+            if (data.typePinJie.HasValue) item.SetField("typePinJie", data.typePinJie.Value);
+            // vagueType → vagueType
+            if (data.vagueType.HasValue) item.SetField("vagueType", data.vagueType.Value);
+            // wuDao → wuDao
+            if (data.wuDao != null)
+            {
+                JSONObject wuDao = JSONObject.Create(JSONObject.Type.ARRAY);
+                foreach ((DaoType type, DaoLevel level) in data.wuDao)
+                {
+                    wuDao.Add((int)type);
+                    wuDao.Add((int)level);
+                }
+                item.SetField("wuDao", wuDao);
+            }
+            // wuWeiType → WuWeiType
+            if (data.wuWeiType.HasValue) item.SetField("WuWeiType", data.wuWeiType.Value);
+            // yaoZhi1 → yaoZhi1
+            if (data.yaoZhi1.HasValue) item.SetField("yaoZhi1", data.yaoZhi1.Value);
+            // yaoZhi2 → yaoZhi2
+            if (data.yaoZhi2.HasValue) item.SetField("yaoZhi2", data.yaoZhi2.Value);
+            // yaoZhi3 → yaoZhi3
+            if (data.yaoZhi3.HasValue) item.SetField("yaoZhi3", data.yaoZhi3.Value);
+
+            // 请教版本特殊处理：价格固定为 1，ShopType 固定为 99（不投放）
             if (data.qingJiao)
             {
                 item.SetField("price", 1);
@@ -383,6 +481,10 @@ namespace SkillRebalanceExpansionMod.Factories
             }
         }
 
+        /// <summary>
+        /// 将单个 ItemData 注入到 _ItemJsonData 中。
+        /// 若 ID 已存在则更新，否则新建并调用 InitNewItem 初始化技能书相关字段。
+        /// </summary>
         private static void InjectItemData(ItemData data)
         {
             string id = data.realId.Value.ToString();
@@ -404,6 +506,9 @@ namespace SkillRebalanceExpansionMod.Factories
             ApplyItemData(item, data);
         }
 
+        /// <summary>
+        /// 将物品的 seid 特性数据注入到 ItemsSeidJsonData 中。
+        /// </summary>
         private static void InjectItemSeid(ItemData data)
         {
             if (data.seidData == null || data.seidData.Count == 0) return;
@@ -454,6 +559,5 @@ namespace SkillRebalanceExpansionMod.Factories
                 );
             }
         }
-    
     }
 }

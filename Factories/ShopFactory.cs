@@ -4,17 +4,35 @@ using SkillRebalanceExpansionMod.Models.Shop;
 
 namespace SkillRebalanceExpansionMod.Factories
 {
+    /// <summary>
+    /// 商店工厂，负责收集所有商店的商品增删请求，并统一应用到游戏商店 JSON 数据中。
+    /// </summary>
     public static class ShopFactory
     {
+        /// <summary>
+        /// 商店商品条目标识 ID 起始基数，用于分配新增商品在 jiaoHuanShopGoods 中的 id。
+        /// </summary>
         private const int baseId = 1470;
+
+        /// <summary>
+        /// 所有商店定义的缓存列表。
+        /// </summary>
         private static readonly List<ShopDefinition> shops = ShopCollection.GetDefinitions();
 
+        // ======================== 公开方法 ========================
+
+        /// <summary>
+        /// 初始化阶段：清空所有商店的增删列表，然后通过 DataManager.Register 调用各数据类的 Register() 方法收集修改请求。
+        /// </summary>
         public static void Initialize()
         {
             foreach (ShopDefinition shop in shops) shop.Clear();
             DataManager.Register(DataCategory.Shop);
         }
 
+        /// <summary>
+        /// 注入阶段：将收集到的增删请求应用到游戏 JSON。
+        /// </summary>
         public static void Inject()
         {
             List<(int goodsId, int shopId)> removes = [];

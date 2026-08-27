@@ -1,6 +1,8 @@
 namespace SkillRebalanceExpansionMod.Models.Skill
 {
-    // 神通请教类型，对应qingjiaotype
+    /// <summary>
+    /// 神通请教类型，对应 JSON 字段 qingjiaotype。
+    /// </summary>
     public enum QingJiaoType
     {
         普通 = 1,
@@ -12,7 +14,9 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         不可请教 = 7
     }
 
-    // 神通类型，对应 Skill_Type
+    /// <summary>
+    /// 神通类型（决定技能在 AI 中的释放优先级），对应 JSON 字段 Skill_Type。
+    /// </summary>
     public enum SkillType
     {
         阵法 = 1,
@@ -24,7 +28,9 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         废弃 = 20
     }
 
-    // 神通攻击类型，对应 AttackType
+    /// <summary>
+    /// 攻击类型（决定技能伤害类型与克制关系），对应 JSON 字段 AttackType。
+    /// </summary>
     public enum AttackType
     {
         金 = 0,
@@ -50,21 +56,28 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         淬体秘术 = 20
     }
 
-    // 技能执行脚本，对应 script
+    /// <summary>
+    /// 技能执行脚本，对应 JSON 字段 script（"SkillSelf" / "SkillAttack"）。
+    /// </summary>
     public enum Script
     {
         对敌人,
         对自己
     }
 
-    // 技能释放方式，对应 Skill_DisplayType
+    /// <summary>
+    /// 技能释放方式，对应 JSON 字段 Skill_DisplayType。
+    /// </summary>
     public enum SkillDisplayType
     {
         目标身上 = 0,
         我到目标 = 1
     }
 
-    // 神通灵气消耗类型，对应 skill_CastType
+    /// <summary>
+    /// 灵气消耗类型，用于 cost 字段中的 type。
+    /// 其中 同 = 999 表示同系灵气（任意非魔类型），写入 skill_SameCastNum。
+    /// </summary>
     public enum CardType
     {
         金 = 0,
@@ -76,7 +89,9 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         同 = 999
     }
 
-    // 神通阶级，对应Skill_LV
+    /// <summary>
+    /// 神通阶级（人/地/天），对应 JSON 字段 Skill_LV。
+    /// </summary>
     public enum SkillJie
     {
         人 = 1,
@@ -84,7 +99,9 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         天 = 3
     }
 
-    // 神通品级，对应typePinJie
+    /// <summary>
+    /// 神通品级（下/中/上），对应 JSON 字段 typePinJie。
+    /// </summary>
     public enum SkillPin
     {
         下 = 1,
@@ -92,7 +109,9 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         上 = 3
     }
 
-    // 图鉴类型，对应TuJianType
+    /// <summary>
+    /// 图鉴类型，对应 JSON 字段 TuJianType。
+    /// </summary>
     public enum TuJianType
     {
         无 = 0,

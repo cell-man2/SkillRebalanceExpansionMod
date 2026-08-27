@@ -1,6 +1,8 @@
 namespace SkillRebalanceExpansionMod.Models.Item
 {
-    // 物品类型，对应type
+    /// <summary>
+    /// 物品类型，对应 JSON 字段 type。
+    /// </summary>
     public enum Type
     {
         武器 = 0,
@@ -22,7 +24,9 @@ namespace SkillRebalanceExpansionMod.Models.Item
         其它 = 16
     }
 
-    // 物品图鉴类型，对应TuJianType
+    /// <summary>
+    /// 物品图鉴类型，对应 JSON 字段 TuJianType。
+    /// </summary>
     public enum TuJianType
     {
         其它 = 0,
@@ -32,7 +36,9 @@ namespace SkillRebalanceExpansionMod.Models.Item
         丹药 = 4
     }
 
-    // 商店类型，对应ShopType
+    /// <summary>
+    /// 商店类型，对应 JSON 字段 ShopType。
+    /// </summary>
     public enum ShopType
     {
         坊市技能书 = 4,
@@ -50,7 +56,9 @@ namespace SkillRebalanceExpansionMod.Models.Item
         不投放 = 99
     }
 
-    // 物品标签，对应ItemFlag
+    /// <summary>
+    /// 物品标签，对应 JSON 字段 ItemFlag。
+    /// </summary>
     public enum ItemFlag
     {
         神通秘籍 = 4,
@@ -119,7 +127,9 @@ namespace SkillRebalanceExpansionMod.Models.Item
         天阶遁术 = 5037
     }
 
-    // 悟道大道种类，用于wuDao的数据编写
+    /// <summary>
+    /// 悟道大道种类，用于 wuDao 的数据编写。
+    /// </summary>
     public enum DaoType
     {
         金 = 1,
@@ -133,7 +143,9 @@ namespace SkillRebalanceExpansionMod.Models.Item
         气 = 9
     }
 
-    // 悟道水平，用于wuDao的数据编写
+    /// <summary>
+    /// 悟道水平，用于 wuDao 的数据编写。
+    /// </summary>
     public enum DaoLevel
     {
         无 = 0,
@@ -144,7 +156,9 @@ namespace SkillRebalanceExpansionMod.Models.Item
         大道已成 = 5
     }
 
-    // 用于标识Info是功法还是神通的
+    /// <summary>
+    /// 书籍类型（功法/神通），用于 BookInfo。
+    /// </summary>
     public enum BookType
     {
         功法,
