@@ -1,4 +1,6 @@
 using SkillRebalanceExpansionMod.Factories;
+using System;
+using System.Collections.Generic;
 
 namespace SkillRebalanceExpansionMod.Core
 {
@@ -9,8 +11,10 @@ namespace SkillRebalanceExpansionMod.Core
             Registry.Clear();
 
             InitializeFactories();
+            CheckRegistryDuplicates();
             InjectFactories();
 
+            // 打印注册信息（仅当没有错误时执行）
             foreach (var buff in Registry.buff)
             {
                 Main.Log.LogInfo($"Buff: {buff.Key} -> {buff.Value}");
@@ -67,6 +71,49 @@ namespace SkillRebalanceExpansionMod.Core
             ItemFactory.Inject();
             ShopFactory.Inject();
             NPCLeiXingFactory.Inject();
+        }
+
+        private static void CheckRegistryDuplicates()
+        {
+            // 需要检查的字典列表（所有存储 int ID 的字典）
+            var dicts = new Dictionary<string, Dictionary<string, int>>
+            {
+                { "buff", Registry.buff },
+                { "item", Registry.item },
+                { "skill", Registry.skill },
+                { "staticSkill", Registry.staticSkill },
+                { "npcLeiXing", Registry.npcLeiXing },
+                { "sId", Registry.sId },
+                { "ssId", Registry.ssId }
+            };
+
+            foreach (var kvp in dicts)
+            {
+                string dictName = kvp.Key;
+                var dict = kvp.Value;
+                var seenIds = new HashSet<int>();
+
+                foreach (var pair in dict)
+                {
+                    int id = pair.Value;
+                    if (!seenIds.Add(id))
+                    {
+                        // 找出所有使用这个 ID 的 key
+                        var keys = new List<string>();
+                        foreach (var p in dict)
+                        {
+                            if (p.Value == id)
+                                keys.Add(p.Key);
+                        }
+                        string keyList = string.Join(", ", keys);
+                        throw new Exception(
+                            $"注册表 {dictName} 中存在重复的 ID: {id}，被多个 key 使用: {keyList}，请检查配表"
+                        );
+                    }
+                }
+            }
+
+            Main.Log.LogInfo("[Loader] 注册表查重完成，未发现重复 ID。");
         }
     }
 }

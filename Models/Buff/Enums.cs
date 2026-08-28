@@ -1,6 +1,8 @@
 namespace SkillRebalanceExpansionMod.Models.Buff
 {
-    // Buff触发时机，对应trigger
+    /// <summary>
+    /// Buff 触发时机，对应 JSON 字段 trigger。
+    /// </summary>
     public enum Trigger
     {
         回合结束时 = 1,
@@ -51,7 +53,9 @@ namespace SkillRebalanceExpansionMod.Models.Buff
         受到技能伤害前 = 46
     }
 
-    // Buff移除方式，对应removeTrigger
+    /// <summary>
+    /// Buff 移除方式，对应 JSON 字段 removeTrigger。
+    /// </summary>
     public enum RemoveTrigger
     {
         触发后移除一层 = 1,
@@ -70,7 +74,9 @@ namespace SkillRebalanceExpansionMod.Models.Buff
         回合开始时移除一半 = 14
     }
 
-    // Buff叠加方式，对应BuffType
+    /// <summary>
+    /// Buff 叠加方式，对应 JSON 字段 BuffType。
+    /// </summary>
     public enum StackType
     {
         叠加 = 0,
@@ -79,7 +85,9 @@ namespace SkillRebalanceExpansionMod.Models.Buff
         放技能 = 3
     }
 
-    // Buff分类，对应bufftype
+    /// <summary>
+    /// Buff 分类，对应 JSON 字段 bufftype。
+    /// </summary>
     public enum BuffType
     {
         负面Buff = 1,
@@ -100,7 +108,9 @@ namespace SkillRebalanceExpansionMod.Models.Buff
         渡劫 = 16
     }
 
-    // Buff特效，对应skillEffect
+    /// <summary>
+    /// Buff 技能特效，对应 JSON 字段 skillEffect。
+    /// </summary>
     public enum SkillEffect
     {
         无 = 0,

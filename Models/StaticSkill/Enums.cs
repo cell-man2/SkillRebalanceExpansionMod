@@ -1,6 +1,8 @@
 namespace SkillRebalanceExpansionMod.Models.StaticSkill
 {
-    // 功法请教类型，对应qingjiaotype
+    /// <summary>
+    /// 功法请教类型，对应 JSON 字段 qingjiaotype。
+    /// </summary>
     public enum QingJiaoType
     {
         普通 = 1,
@@ -12,7 +14,9 @@ namespace SkillRebalanceExpansionMod.Models.StaticSkill
         不可请教 = 7
     }
 
-    // 功法属性，对应AttackType
+    /// <summary>
+    /// 功法属性，对应 JSON 字段 AttackType。
+    /// </summary>
     public enum AttackType
     {
         金 = 0,
@@ -27,7 +31,9 @@ namespace SkillRebalanceExpansionMod.Models.StaticSkill
         体 = 9
     }
 
-    // 功法类型，无对应
+    /// <summary>
+    /// 功法类型标识（战斗/中庸/修炼），用于自动计算修炼速度，不直接写入 JSON。
+    /// </summary>
     public enum SkillStyle
     {
         战斗 = 1,
@@ -35,7 +41,9 @@ namespace SkillRebalanceExpansionMod.Models.StaticSkill
         修炼 = 3
     }
 
-    // 功法阶级，对应Skill_LV
+    /// <summary>
+    /// 功法阶级（人/地/天），对应 JSON 字段 Skill_LV。
+    /// </summary>
     public enum SkillJie
     {
         人 = 1,
@@ -43,7 +51,9 @@ namespace SkillRebalanceExpansionMod.Models.StaticSkill
         天 = 3
     }
 
-    // 功法品级，对应typePinJie
+    /// <summary>
+    /// 功法品级（下/中/上），对应 JSON 字段 typePinJie。
+    /// </summary>
     public enum SkillPin
     {
         下 = 1,
@@ -51,7 +61,9 @@ namespace SkillRebalanceExpansionMod.Models.StaticSkill
         上 = 3
     }
 
-    // 图鉴类型，对应TuJianType
+    /// <summary>
+    /// 图鉴类型，对应 JSON 字段 TuJianType。
+    /// </summary>
     public enum TuJianType
     {
         无 = 0,
