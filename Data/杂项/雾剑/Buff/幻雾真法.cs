@@ -71,7 +71,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             result.Add(new BuffData
             {
                 key = "幻雾真法(消耗增加)",
-                localId = 17,
+                localId = 23,
                 buffType = BuffType.功法被动,
                 descr = "释放【幻雾术】技能额外消耗一点水系灵气",
                 name = "幻雾真法（消耗增加）",
@@ -96,7 +96,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             result.Add(new BuffData
             {
                 key = "幻雾真法(额外幻雾)",
-                localId = 18,
+                localId = 24,
                 buffType = BuffType.功法被动,
                 descr = "释放【幻雾术】技能额外获得【幻雾】*（attack）",
                 name = "幻雾真法（额外幻雾）",

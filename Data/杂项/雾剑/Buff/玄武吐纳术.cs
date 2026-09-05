@@ -34,12 +34,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
     [DataBase(DataCategory.Buff, "杂项雾剑", "玄武吐纳术")]
     public static class 玄武吐纳术
     {
+        private static readonly List<int> fogLimit = [ 1, 2, 4, 6, 10 ];
+
         public static readonly List<BuffData> Data = CreateData();
 
         private static List<BuffData> CreateData()
         {
             List<BuffData> result = [];
-            int[] prob = [10, 15, 20, 25, 30];
 
             for (int i = 0; i < 5; i++)
             {
@@ -50,33 +51,64 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 {
                     key = $"玄武吐纳术(吸收灵气检测&展示{level})",
                     realId = 382 + i,
+                    descr = "每吸收一点灵气，" +
+                        $"若你的【幻雾】层数小于{fogLimit[i]}，则获得【幻雾】*1；" +
+                        $"有{5 + 4 * level}%的几率获得【疗】*X，X为自身【幻雾】的层数。",
                     seidData = new()
                     {
+                        [32] = new()
                         {
-                            32,
-                            new()
-                            {
-                                { "value1", 1 },
-                                { "value2", $"@buff:玄武吐纳术(执行判定{level})" },
-                                { "value3", 1 }
-                            }
+                            ["value1"] = 1,
+                            ["value2"] = $"@buff:玄武吐纳术(执行补雾{level})",
+                            ["value3"] = 1
                         }
                     },
                     trigger = Trigger.抽牌时,
                 });
 
-                // 执行判定
+                // 执行补充雾的判定
                 result.Add(new BuffData
                 {
-                    key = $"玄武吐纳术(执行判定{level})",
+                    key = $"玄武吐纳术(执行补雾{level})",
                     localId = 7 + i,
                     buffType = BuffType.功法被动,
-                    descr = $"执行判定：有{prob[i]}%的几率获得【疗】*X。X为自身【幻雾】的层数",
-                    name = $"玄武吐纳术（执行判定{level}）",
+                    descr = $"执行（attack）次判定：若【幻雾】层数低于固定值，获得【幻雾】；触发等量次获得疗判定",
+                    name = $"玄武吐纳术（执行补雾）",
                     removeTrigger = RemoveTrigger.触发后移除所有,
                     seidData = new()
                     {
-                        { 82, new() { { "value1", 1 }, { "value2", $"@buff:玄武吐纳术(获得疗{level})" } } },
+                        [82] = new()
+                        {
+                            ["value1"] = 1,
+                            ["value2"] = "@buff:玄武吐纳术(获得雾)"
+                        },
+                        [5] = new()
+                        {
+                            ["value1"] = new List<object> { $"@buff:玄武吐纳术(执行拿疗{level})" },
+                            ["value2"] = new List<object> { 1 }
+                        }
+                    },
+                    trigger = Trigger.获得自身Buff后,
+                    buffIcon = 382,
+                    isHide = true,
+                });
+
+                // 执行获得疗的判定
+                result.Add(new BuffData
+                {
+                    key = $"玄武吐纳术(执行拿疗{level})",
+                    localId = 12 + i,
+                    buffType = BuffType.功法被动,
+                    descr = $"执行（attack）次判定：{5 + 4 * level}%的几率获得【疗】*X。X为自身【幻雾】的层数",
+                    name = $"玄武吐纳术（执行拿疗）",
+                    removeTrigger = RemoveTrigger.触发后移除所有,
+                    seidData = new()
+                    {
+                        [82] = new()
+                        {
+                            ["value1"] = 1,
+                            ["value2"] = $"@buff:玄武吐纳术(获得疗{level})"
+                        }
                     },
                     trigger = Trigger.获得自身Buff后,
                     buffIcon = 382,
@@ -87,23 +119,23 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 result.Add(new BuffData
                 {
                     key = $"玄武吐纳术(获得疗{level})",
-                    localId = 12 + i,
+                    localId = 18 + i,
                     buffType = BuffType.功法被动,
-                    descr = $"触发后有{prob[i]}%的几率获得【疗】*X。X为自身【幻雾】的层数",
-                    name = $"玄武吐纳术（获得疗{level}）",
+                    descr = $"有{5 + 4 * level}%的几率获得【疗】*X。X为自身【幻雾】的层数",
+                    name = "玄武吐纳术（获得疗）",
                     removeTrigger = RemoveTrigger.不主动移除,
                     seidData = new()
                     {
-                        { 65, new() { { "value1", prob[i] } } },
+                        [65] = new()
                         {
-                            54,
-                            new()
-                            {
-                                { "value1", 1 },
-                                { "value2", 24 },
-                                { "value3", 1 },
-                                { "value4", 44 }
-                            }
+                            ["value1"] = 5 + 4 * level
+                        },
+                        [54] = new()
+                        {
+                            ["value1"] = 1,
+                            ["value2"] = 24,
+                            ["value3"] = 1,
+                            ["value4"] = 44
                         }
                     },
                     trigger = Trigger.不主动触发,
@@ -111,6 +143,32 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     isHide = true,
                 });
             }
+
+            result.Add(new BuffData
+            {
+                key = $"玄武吐纳术(获得雾)",
+                localId = 17,
+                buffType = BuffType.功法被动,
+                descr = $"若【幻雾】层数小于（attack），获得【幻雾】*1",
+                name = $"玄武吐纳术（获得雾）",
+                removeTrigger = RemoveTrigger.不主动移除,
+                seidData = new()
+                {
+                    [126] = new()
+                    {
+                        ["value1"] = "@buff:玄武吐纳术(获得雾)",
+                        ["value2"] = 24
+                    },
+                    [127] = new()
+                    {
+                        ["value1"] = new List<int> { 24 },
+                        ["value2"] = new List<int> { 1 }
+                    }
+                },
+                trigger = Trigger.不主动触发,
+                buffIcon = 382,
+                isHide = true,
+            });
 
             return result;
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using SkillRebalanceExpansionMod.Models.StaticSkill;
 using SkillRebalanceExpansionMod.Utils;
@@ -44,6 +45,10 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
     public static class 玄武吐纳术
     {
         private static readonly List<int> skillLv = [ 1, 2, 3, 4, 5 ];
+        private static readonly List<int> fogLimit = [ 1, 2, 4, 6, 10 ];
+        private static readonly Func<int, string> descrFunc = tier =>
+            $"每吸收一点灵气，若你的【幻雾】层数小于{fogLimit[tier-1]}，则获得【幻雾】*1；" +
+            $"有{5 + 4 * tier}%的几率获得【疗】*X，X为自身【幻雾】的层数。";
 
         public static List<StaticSkillData> Data =
         [
@@ -52,36 +57,32 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
                 key = "玄武吐纳术",
                 realId = 221,
                 skillLv = skillLv,
+                descr = TierValue<string>.Create(descrFunc, skillLv),
+                affix = TierValue<List<int>>.Create(
+                    tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
+                    skillLv
+                ),
                 seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                    tier => new()
+                    tier => new Dictionary<object, Dictionary<string, object>>
                     {
+                        [1] = new()
                         {
-                            1,
-                            new()
+                            ["target"] = 1,
+                            ["value1"] = new List<object>
                             {
-                                { "target", 1 },
-                                {
-                                    "value1",
-                                    new List<object> 
-                                    {
-                                        $"@buff:玄武吐纳术(吸收灵气检测&展示{tier})",
-                                        $"@buff:玄武吐纳术(获得疗{tier})",
-                                        24
-                                    }
-                                },
-                                { "value2", new List<int> { 1, 1, tier } }
-                            }
+                                $"@buff:玄武吐纳术(吸收灵气检测&展示{tier})",
+                                $"@buff:玄武吐纳术(获得雾)",
+                                $"@buff:玄武吐纳术(获得疗{tier})"
+                            },
+                            ["value2"] = new List<object> { 1, fogLimit[tier - 1], 1 }
                         }
                     },
                     skillLv
                 ),
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillJie = ,
-                // skillPin = ,
-                // skillSpeed = TierValue<int>.Create(tier => , skillLv),
-                // skillStyle = ,
-                // tuJianDescr = TierValue<string>.Create(tier => , skillLv),
-                // tuJianType = ,
+                tuJianDescr = TierValue<string>.Create(
+                    tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
+                    skillLv
+                ),
             }
         ];
     }
