@@ -32,7 +32,7 @@ namespace SkillRebalanceExpansionMod.Data.Shop
     {
         public static void Register()
         {
-            ShopCollection.星河.秘阁功法.Add(4205);
+            ShopCollection.星河.秘阁功法.Add("@item:幻雾真法");
         }
     }
 }

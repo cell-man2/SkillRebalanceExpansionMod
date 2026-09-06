@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using SkillRebalanceExpansionMod.Models.Buff;
 
 namespace SkillRebalanceExpansionMod.Data.Buff
@@ -34,91 +35,77 @@ namespace SkillRebalanceExpansionMod.Data.Buff
     [DataBase(DataCategory.Buff, "杂项雾剑", "幻雾真法")]
     public static class 幻雾真法
     {
-        public static readonly List<BuffData> Data = CreateData();
-
-        private static List<BuffData> CreateData()
-        {
-            List<BuffData> result = [];
-            int[] prob = [ 50, 55, 65, 80 ];
-
-            for (int i = 0; i < 5; i++)
+        public static readonly List<BuffData> Data =
+        [
+            .. Enumerable.Range(0, 3).Select(i =>
             {
-                int level = i + 1;
-                Dictionary<object, Dictionary<string, object>> seid = [];
-                
-                if (level < 5)
+                return new BuffData
                 {
-                    seid.Add(65, new Dictionary<string, object> {{ "value1", prob[i] }});
-                }
-                seid.Add(79, new Dictionary<string, object> {{ "value1", 1 }});
-
-                // 闪避偷灵气
-                result.Add(new BuffData
-                {
-                    key = $"幻雾真法(闪避偷灵气&展示{level})",
+                    key = $"幻雾真法(闪避聚气&展示{i + 1})",
                     realId = 335 + i,
-                    descr =  "每次闪避对手的攻击时，" +
-                        (level < 5 ? $"便有{prob[i]}%的几率" : "") +
-                        "窃取对手的一点灵气" +
-                        (level >= 3 ? $"；释放【幻雾术】技能将额外消耗一点水系灵气，并使获得的【幻雾】层数+1" : ""),
+                    descr = "每次闪避对手的攻击时，获得【聚气】*（attack）" +
+                    (
+                        i >= 1
+                        ? $"；释放【幻雾术】额外消耗一点水系灵气，并使获得的幻雾层数+{i}"
+                        : ""
+                    ),
                     removeTrigger = RemoveTrigger.不主动移除,
-                    seidData = seid,
+                    seidData = new()
+                    {
+                        [5] = new()
+                        {
+                            ["value1"] = new List<object> { 15 },
+                            ["value2"] = new List<object> { 1 }
+                        }
+                    },
                     trigger = Trigger.闪避伤害时,
                     showOnlyOne = true
-                });
-            }
+                };
+            }),
 
-            result.Add(new BuffData
+            new BuffData
             {
                 key = "幻雾真法(消耗增加)",
-                localId = 23,
-                buffType = BuffType.功法被动,
+                realId = 338,
                 descr = "释放【幻雾术】技能额外消耗一点水系灵气",
                 name = "幻雾真法（消耗增加）",
                 removeTrigger = RemoveTrigger.不主动移除,
-                seidData = new ()
+                seidData = new()
                 {
+                    [144] = new()
                     {
-                        144,
-                        new Dictionary<string, object>
-                        {
-                            { "value1", 207 },
-                            { "value2", 1 },
-                            { "value3", 2 }
-                        } 
+                        ["value1"] = 207,
+                        ["value2"] = 1,
+                        ["value3"] = 2
                     }
                 },
                 trigger = Trigger.受到伤害时,
                 buffIcon = 335,
                 isHide = true
-            });
+            },
 
-            result.Add(new BuffData
+            new BuffData
             {
                 key = "幻雾真法(额外幻雾)",
-                localId = 24,
-                buffType = BuffType.功法被动,
+                realId = 339,
                 descr = "释放【幻雾术】技能额外获得【幻雾】*（attack）",
                 name = "幻雾真法（额外幻雾）",
-                removeTrigger = RemoveTrigger.不主动移除,
-                seidData = new ()
+                seidData = new()
                 {
-                    { 76, new Dictionary<string, object> {{"value1", 207}} },
+                    [76] = new()
                     {
-                        5,
-                        new Dictionary<string, object>
-                        {
-                            {"value1", new List<int> { 24 }},
-                            {"value2", new List<int> { 1 }}
-                        }
+                        ["value1"] = 207
+                    },
+                    [5] = new()
+                    {
+                        ["value1"] = new List<object> { 24 },
+                        ["value2"] = new List<object> { 1 }
                     }
                 },
                 trigger = Trigger.使用技能时,
                 buffIcon = 335,
                 isHide = true
-            });
-
-            return result;
-        }
+            }
+        ];
     }
 }

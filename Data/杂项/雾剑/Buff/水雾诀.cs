@@ -46,12 +46,14 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 trigger = Trigger.回合结束时,
                 seidData = new()
                 {
-                    [119] = new() {
+                    [119] = new()
+                    {
                         ["target"] = 1,
                         ["value1"] = 24,
                         ["value2"] = 1
                     },
-                    [5] = new() {
+                    [5] = new()
+                    {
                         ["value1"] = new List<int> { 44 },
                         ["value2"] = new List<int> { 1 }
                     }

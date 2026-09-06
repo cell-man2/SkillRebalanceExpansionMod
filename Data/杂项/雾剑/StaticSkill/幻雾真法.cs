@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using SkillRebalanceExpansionMod.Models.StaticSkill;
 using SkillRebalanceExpansionMod.Utils;
@@ -44,7 +45,13 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
     public static class 幻雾真法
     {
         private static readonly List<int> skillLv = [1, 2, 3, 4, 5];
-        private static readonly List<int> prob = [ 50, 55, 65, 80 ];
+        private static readonly Func<int, string> descrFunc = tier =>
+            "每次闪避对手的攻击时，获得【聚气】*1" +
+            (
+                tier >= 3
+                ? $"；释放【幻雾术】额外消耗一点水系灵气，并使获得的幻雾层数+{(tier == 5 ? 2 : 1)}"
+                : ""
+            );
 
         public static List<StaticSkillData> Data =
         [
@@ -52,68 +59,42 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
             {
                 key = "幻雾真法",
                 realId = 205,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
-                descr = TierValue<string>.Create(
-                    tier => "每次闪避对手的攻击时，" +
-                        (tier < 5 ? $"便有{prob[tier - 1]}%的几率" : "") +
-                        "窃取对手的一点灵气" +
-                        (tier >= 4 ? "；释放【幻雾术】技能将额外消耗一点水系灵气，并使获得的【幻雾】层数+1" : ""),
+                descr = TierValue<string>.Create(descrFunc, skillLv),
+                affix = TierValue<List<int>>.Create(
+                    tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // attackType = ,
-
-                // ==================== 选填字段 ====================
-                // affix = TierValue<List<int>>.Create(tier => , skillLv),
-                // df = ,
-                // icon = ,
-                // qingJiaoType = ,
                 seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
                     tier =>
-                    {
-                        var value1 = new List<object> { $"@buff:幻雾真法(闪避偷灵气&展示{tier})" };
-                        var value2 = new List<object> { 1 };
-                        
-                        if (tier >= 4)
+                    {   
+                        List<object> value1 = [$"@buff:幻雾真法(闪避聚气&展示{(tier+1)/2})"];
+                        if (tier >= 3)
                         {
                             value1.Add("@buff:幻雾真法(消耗增加)");
                             value1.Add("@buff:幻雾真法(额外幻雾)");
-                            value2.Add(1);
-                            value2.Add(1);
                         }
                         
-                        return new ()
+                        List<object> value2 = tier < 3
+                            ? [1]
+                            : [1, 1, tier == 5 ? 2 : 1];
+                        
+                        return new Dictionary<object, Dictionary<string, object>>
                         {
+                            [1] = new Dictionary<string, object>
                             {
-                                1,
-                                new Dictionary<string, object>
-                                {
-                                    { "target", 1 },
-                                    { "value1", value1 },
-                                    { "value2", value2 }
-                                }
+                                ["target"] = 1,
+                                ["value1"] = value1,
+                                ["value2"] = value2
                             }
                         };
                     },
                     skillLv
                 ),
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillJie = ,
-                // skillPin = ,
-                // skillSpeed = TierValue<int>.Create(tier => , skillLv),
                 tuJianDescr = TierValue<string>.Create(
-                    tier => AffixProcessor.FormatTuJian(
-                        "每次闪避对手的攻击时，" +
-                        (tier < 5 ? $"便有{prob[tier - 1]}%的几率" : "") +
-                        "窃取对手的一点灵气" +
-                        (tier >= 4 ? "；释放【幻雾术】技能将额外消耗一点水系灵气，并使获得的【幻雾】层数+1" : "")
-                    ),
+                    tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv
                 ),
-                // tuJianType = ,
             }
         ];
     }
