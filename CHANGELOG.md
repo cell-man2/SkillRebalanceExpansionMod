@@ -10,6 +10,30 @@
 
 ---
 
+### [1.2.7] - 2026-09-07
+
+> 本次更新为 Buff 工厂新增 `__registerOnly` 标记支持，以适配某些特殊 seid（如 seid 130）仅注册数据而不挂载特性数组的需求；同时补全 Buff 触发时机枚举。
+
+#### 新增
+
+- **Buff 工厂**：`seidData` 支持 `__registerOnly` 标记。
+
+  - 在某个 seid 的内层字典中添加 `"__registerOnly": true` 后，该 seid 仅写入 `BuffSeidJsonData` 表，不会添加到 Buff 的 `seid` 数组中。
+  - 适用于仅需要数据挂载而不触发特性逻辑的特殊 seid。
+
+- **Buff 枚举**：补全 `Trigger` 枚举缺失的三个触发时机。
+
+  - `回合开始前`（48）
+  - `受到技能伤害前`（46）
+  - `释放技能后`（47）
+
+#### 修改
+
+- 优化 `BuffFactory.InjectBuffData()` 中 `seid` 数组的构建逻辑，在遍历 `seidData` 时检查 `__registerOnly` 标记并跳过对应条目。
+- 优化 `BuffFactory.InjectBuffSeid()` 的字段写入逻辑，跳过 `__registerOnly` 内部标记字段，避免误写入 JSON。
+
+---
+
 ### [1.2.2] ~ [1.2.6]
 
 本阶段主要进行杂项雾剑流派内容开发与调整。

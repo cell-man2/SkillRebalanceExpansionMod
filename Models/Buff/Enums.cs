@@ -50,7 +50,10 @@ namespace SkillRebalanceExpansionMod.Models.Buff
         护罩破碎后 = 43,
         弃牌阶段开始前 = 44,
         出牌阶段开始时 = 45,
-        受到技能伤害前 = 46
+        受到技能伤害前 = 46,
+        释放技能后 = 47,
+        回合开始前 = 48,
+        我方剑气触发时 = 49
     }
 
     /// <summary>
