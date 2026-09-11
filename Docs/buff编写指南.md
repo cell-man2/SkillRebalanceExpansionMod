@@ -214,7 +214,22 @@ seidData = new()
 
 - seid 130 等特殊特性：需要挂载到 Buff 的 Seid 数据表中但不作为“特性”触发的配置
 
-### 6.4 seid 参数查询
+### 6.4 空注册（不写入 BuffSeidJsonData）
+
+与 `__registerOnly` 相反，如果你只需要在 Buff 本体的 `seid` 数组中声明某个 seid 编号，但不需要向 `BuffSeidJsonData` 表中写入任何参数，可以将该 seid 对应的字典 Value 设置为 `null`（例如 seid 8 抽牌减半）。
+
+工厂处理时会将其视为“空注册”，仅保留 Buff 本体 JSON 中的 seid 声明，自动跳过 `BuffSeidJsonData` 的写入。
+
+#### 使用方式
+
+```csharp
+seidData = new()
+{
+    [8] = null,
+}
+```
+
+### 6.5 seid 参数查询
 
 每个 seid 有自己独立的参数类型和结构，详细信息请查阅游戏官方 Excel 表格中各 seid 的字段定义与参数说明。
 

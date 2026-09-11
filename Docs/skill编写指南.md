@@ -218,6 +218,24 @@ skill_SameCastNum = [2, 2] // 两组同系消耗
 
 工厂在处理 `seidData` 和 `aiData` 时会递归解析所有 `object` 值，遇到字符串 `@类型:key` 则查表替换为对应 ID，遇到数组/字典则递归处理内部元素。
 
+### 6.3 空注册（不写入 SkillSeidJsonData）
+
+在某些特殊情况下，你可能只需要在神通本体的 `seid` 数组中声明某个 seid 编号，但不需要向 `SkillSeidJsonData` 表中写入任何参数（例如 seid 6 后继无力只需要存在于 seid 列表就可以生效）。
+
+此时，你可以将该 seid 对应的字典 Value 设置为 `null`（或空字典 `new()`）。工厂处理时会将其视为“空注册”，仅保留神通本体 JSON 中的 seid 声明，自动跳过 `SkillSeidJsonData` 的写入。
+
+**示例**：
+
+```csharp
+seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
+    tier => new()
+    {
+        [6] = null,
+    },
+    skillLv
+),
+```
+
 ---
 
 ## 七、TierValue 使用指南

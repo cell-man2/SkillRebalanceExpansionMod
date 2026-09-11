@@ -6,7 +6,33 @@
 
 相关的详细更新日志：
 
+- [星河水剑更新日志](Data/星河/水剑/CHANGELOG.md)
 - [杂项雾剑更新日志](Data/杂项/雾剑/CHANGELOG.md)
+
+---
+
+### [1.2.10] - 2026-09-11
+
+> 本次更新补充了对空注册 seid 的支持，并完善了 Buff/Skill 编写说明，便于在不写入 `SeidJsonData` 的情况下声明部分特殊 seid。 
+
+#### 新增
+
+- **工厂兼容性增强**：新增对 `seidData` 值为 `null` 的空注册支持。
+- **开发文档补充**：补充说明空注册写法的适用场景与用法。
+
+#### 修改
+
+- 优化 `BuffFactory`、`SkillFactory`、`StaticSkillFactory` 的 `seid` 注入逻辑，确保空注册条目不会产生空参数写入错误。
+
+---
+
+### [1.2.8] ~ [1.2.9]
+
+本阶段主要进行星河水剑流派内容开发与调整。
+
+详细更新：
+
+[星河水剑更新日志](Data/星河/水剑/CHANGELOG.md)
 
 ---
 
@@ -16,11 +42,7 @@
 
 #### 新增
 
-- **Buff 工厂**：`seidData` 支持 `__registerOnly` 标记。
-
-  - 在某个 seid 的内层字典中添加 `"__registerOnly": true` 后，该 seid 仅写入 `BuffSeidJsonData` 表，不会添加到 Buff 的 `seid` 数组中。
-  - 适用于仅需要数据挂载而不触发特性逻辑的特殊 seid。
-
+- **Buff 工厂**：`seidData` 支持 `__registerOnly` 标记，有此标记的 seidData 值只会注册到对应的 `SeidData` 而不存储于 buff 的 `JSONObject` 本身。
 - **Buff 枚举**：补全 `Trigger` 枚举缺失的三个触发时机。
 
   - `回合开始前`（48）
