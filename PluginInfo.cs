@@ -4,7 +4,7 @@ namespace SkillRebalanceExpansionMod
     {
         public const string GUID = "Cell.MCS.Gameplay.SkillRebalanceExpansionMod";
         public const string NAME = "SkillRebalanceExpansionMod";
-        public const string VERSION = "1.2.10";
+        public const string VERSION = "1.2.11";
     }
 }
 
