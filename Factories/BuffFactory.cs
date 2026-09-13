@@ -205,11 +205,10 @@ namespace SkillRebalanceExpansionMod.Factories
 
                 foreach (var pair in data.seidData)
                 {
-                    // __registerOnly = true 的 Seid 仅注册到 BuffSeidJsonData，
-                    // 不添加到 Buff.seid。
-                    if (pair.Value.TryGetValue("__registerOnly", out object registerOnly) && 
-                        registerOnly is bool flag && 
-                        flag
+                    if (
+                        pair.Value != null &&
+                        pair.Value.TryGetValue("__registerOnly", out object registerOnly) && 
+                        registerOnly is bool flag && flag
                     ) {
                         continue;
                     }
