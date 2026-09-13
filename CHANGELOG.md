@@ -11,9 +11,9 @@
 
 ---
 
-### [1.2.11] - 2026-09-13
+### [1.2.12] - 2026-09-13
 
-> 本次更新修复
+> 本次更新修复了buff工厂空注册seidData在应用阶段 `__registerOnly` 标记检查时会导致报错的问题
 
 #### 修改
 
@@ -21,7 +21,7 @@
 
 #### 修复
 
-- 修复 `BuffFactory` 中 `ApplyBuffData` 函数在应用seid数据时检查 `"__registerOnly"` 标识会导致空注册seid报错的问题。
+- 修复 `BuffFactory` 中 `ApplyBuffData` 函数在应用seid数据时检查 `__registerOnly` 标识会导致空注册seid报错的问题。
 
 ---
 
