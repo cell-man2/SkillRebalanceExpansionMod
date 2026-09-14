@@ -129,6 +129,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                     trigger = Trigger.回血时,
                     buffIcon = 325,
+                    isHide = true,
                 });
             }
 

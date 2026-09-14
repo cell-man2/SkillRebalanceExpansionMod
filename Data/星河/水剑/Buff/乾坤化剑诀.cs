@@ -63,6 +63,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                         ["value4"] = 27
                     }
                 },
+                buffIcon = 350,
             },
             new BuffData
             {
@@ -90,6 +91,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                         ["value4"] = 44
                     }
                 },
+                buffIcon = 350,
             }
         ];
     }
