@@ -1,3 +1,4 @@
+// using System;
 // using System.Collections.Generic;
 // using SkillRebalanceExpansionMod.Models.Skill;
 // using SkillRebalanceExpansionMod.Utils;
@@ -71,6 +72,8 @@
 //     public static class SkillTemplate
 //     {
 //         private static readonly List<int> skillLv = [1, 2, 3, 4, 5];
+//         // private static readonly Func<int, string> descrFunc = tier =>
+//         //     $"";
 
 //         public static List<SkillData> Data =
 //         [
@@ -83,12 +86,12 @@
 
 //                 // ==================== 必填字段 ====================
 //                 // name = TierValue<string>.Create(tier => , skillLv),
-//                 // descr = TierValue<string>.Create(tier => , skillLv),
+//                 // descr = TierValue<string>.Create(descrFunc, skillLv),
 //                 // attackType = ,
 //                 // script = ,
 //                 // skillEffect = ,
 //                 // seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-//                 //     tier => new Dictionary<object, Dictionary<string, object>>
+//                 //     tier => new()
 //                 //     {
 
 //                 //     },
@@ -96,12 +99,15 @@
 //                 // ),
 //                 // cost = new List<(CardType, int)>
 //                 // {
-
+//                 //     (CardType.同, 1)
 //                 // },
 
 //                 // ==================== 选填字段 ====================
 //                 // affix = ,
-//                 // affix2 = ,
+//                 // affix2 = TierValue<List<int>>.Create(
+//                 //     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
+//                 //     skillLv
+//                 // ),
 //                 // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
 //                 //     tier => new Dictionary<object, Dictionary<string, object>>
 //                 //     {
@@ -122,7 +128,10 @@
 //                 // skillPin = ,
 //                 // skillType = ,
 //                 // speed = ,
-//                 // tuJianDescr = TierValue<string>.Create(tier => , skillLv),
+//                 // tuJianDescr = TierValue<string>.Create(
+//                 //     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
+//                 //     skillLv
+//                 // ),
 //                 // tuJianType = ,
 //             }
 //         ];

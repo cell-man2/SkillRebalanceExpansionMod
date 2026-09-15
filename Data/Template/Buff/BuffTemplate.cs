@@ -47,7 +47,7 @@
 //                 // descr = ,
 //                 // name = ,
 //                 // removeTrigger = ,
-//                 // seidData = new Dictionary<object, Dictionary<string, object>>
+//                 // seidData = new()
 //                 // {
 
 //                 // },

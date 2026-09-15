@@ -184,7 +184,52 @@ seidData = new Dictionary<object, Dictionary<string, object>>
 
 `id` 字段由工厂自动填写（值为当前 Buff 的 `realId`），无需在 `seidData` 中手动添加，只需填写其它字段的信息。
 
-### 6.3 seid 参数查询
+### 6.3 特殊标记：__registerOnly
+
+某些特殊的 seid（例如 seid 130）要求**仅将数据写入 `BuffSeidJsonData` 表中，而不在 Buff 的 `seid` 数组中添加该 seid 编号**。为适配此类场景，工厂提供了 `__registerOnly` 标记。
+
+#### 使用方式
+
+在 `seidData` 的某个 seid 的内层字典中添加 `"__registerOnly": true`：
+
+```csharp
+seidData = new()
+{
+    [130] = new()
+    {
+        ["value"] = 500,
+        ["__registerOnly"] = true   // 仅注册到 BuffSeidJsonData，不添加到 Buff.seid
+    }
+}
+```
+
+#### 行为说明
+
+| 标记 | 注入 `Buff.seid` 数组 | 注入 `BuffSeidJsonData[130]` 表 |
+|------|----------------------|-------------------------------|
+| `"__registerOnly": true` | ❌ 跳过 | ✅ 正常写入 |
+| 无此标记或 `false` | ✅ 正常写入 | ✅ 正常写入 |
+
+#### 使用场景
+
+- seid 130 等特殊特性：需要挂载到 Buff 的 Seid 数据表中但不作为“特性”触发的配置
+
+### 6.4 空注册（不写入 BuffSeidJsonData）
+
+与 `__registerOnly` 相反，如果你只需要在 Buff 本体的 `seid` 数组中声明某个 seid 编号，但不需要向 `BuffSeidJsonData` 表中写入任何参数，可以将该 seid 对应的字典 Value 设置为 `null`（例如 seid 8 抽牌减半）。
+
+工厂处理时会将其视为“空注册”，仅保留 Buff 本体 JSON 中的 seid 声明，自动跳过 `BuffSeidJsonData` 的写入。
+
+#### 使用方式
+
+```csharp
+seidData = new()
+{
+    [8] = null,
+}
+```
+
+### 6.5 seid 参数查询
 
 每个 seid 有自己独立的参数类型和结构，详细信息请查阅游戏官方 Excel 表格中各 seid 的字段定义与参数说明。
 

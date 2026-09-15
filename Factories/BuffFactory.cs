@@ -202,16 +202,27 @@ namespace SkillRebalanceExpansionMod.Factories
             if (data.seidData != null)
             {
                 JSONObject seid = JSONObject.Create(JSONObject.Type.ARRAY);
-                foreach (object rawId in data.seidData.Keys)
+
+                foreach (var pair in data.seidData)
                 {
-                    object result = Registry.Resolve(rawId);
-                    if (result is not int id)
-                    {
-                        Main.Log.LogWarning($"Seid引用无效:{rawId}");
+                    if (
+                        pair.Value != null &&
+                        pair.Value.TryGetValue("__registerOnly", out object registerOnly) && 
+                        registerOnly is bool flag && flag
+                    ) {
                         continue;
                     }
+
+                    object result = Registry.Resolve(pair.Key);
+                    if (result is not int id)
+                    {
+                        Main.Log.LogWarning($"Seid引用无效:{pair.Key}");
+                        continue;
+                    }
+
                     seid.Add(id);
                 }
+
                 buff.SetField("seid", seid);
             }
             // showOnlyOne → ShowOnlyOne
@@ -264,7 +275,7 @@ namespace SkillRebalanceExpansionMod.Factories
 
             foreach (var seid in data.seidData)
             {
-                if (seid.Value == null) continue;
+                if (seid.Value == null) continue; 
 
                 object result = Registry.Resolve(seid.Key);
                 if (result is not int seidId)
@@ -291,6 +302,7 @@ namespace SkillRebalanceExpansionMod.Factories
                 foreach (var kpv in seid.Value)
                 {
                     if (kpv.Key == "id") continue;
+                    if (kpv.Key == "__registerOnly") continue;
 
                     seidJson.AddField(
                         kpv.Key,

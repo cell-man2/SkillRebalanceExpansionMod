@@ -516,6 +516,8 @@ namespace SkillRebalanceExpansionMod.Factories
             
             foreach (var seid in data.seidData)
             {
+                if (seid.Value == null) continue; 
+
                 object result = Registry.Resolve(seid.Key);
 
                 if (result is not int seidId)
