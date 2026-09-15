@@ -71,7 +71,7 @@ namespace SkillRebalanceExpansionMod.Data.Item
             },
             new ItemData
             {
-                key = "水雾诀",
+                key = "水雾诀(请教)",
                 realId = 4202,
                 qingJiao = true,
                 desc2 = "水系人阶中庸类功法。",

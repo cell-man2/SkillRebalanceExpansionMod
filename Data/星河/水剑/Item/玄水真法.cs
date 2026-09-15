@@ -67,7 +67,7 @@ namespace SkillRebalanceExpansionMod.Data.Item
             },
             new ItemData
             {
-                key = "玄水真法",
+                key = "玄水真法(请教)",
                 realId = 4213,
                 qingJiao = true,
                 desc2 = "星河剑派秘传天阶战斗类功法。",

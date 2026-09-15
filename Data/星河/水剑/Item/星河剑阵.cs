@@ -63,7 +63,7 @@ namespace SkillRebalanceExpansionMod.Data.Item
             },
             new ItemData
             {
-                key = "星河剑阵",
+                key = "星河剑阵(请教)",
                 realId = 3814,
                 qingJiao = true,
                 desc2 = "由数名星河剑派弟子联手施展的剑阵，阵中惊涛剑意有如星河般流转不息。"

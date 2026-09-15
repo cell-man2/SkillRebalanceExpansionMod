@@ -56,7 +56,6 @@ namespace SkillRebalanceExpansionMod.Data.NPCLeiXing
             {
                 key = "常规NPC修改",
                 realLiuPai = (int)LiuPai.星河剑修,
-                // localLiuPai = ,
                 level = level,
 
                 skills = new TierValue<List<object>>

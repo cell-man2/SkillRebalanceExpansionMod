@@ -8,16 +8,16 @@ namespace SkillRebalanceExpansionMod.Data.Skill
     {
         private static readonly List<int> skillLv = [1, 2, 3, 4, 5];
 
-        public static List<SkillData> Data =
+        public static readonly List<SkillData> Data =
         [
             new SkillData
             {
                 key = "蓄势_天阶",
                 realId = 2217,
                 skillLv = skillLv,
+                qingJiaoType = QingJiaoType.宁州不传,
                 skillJie = SkillJie.天,
                 skillPin = SkillPin.上,
-                qingJiaoType = QingJiaoType.宁州不传,
                 tuJianType = TuJianType.神通
             }
         ];
