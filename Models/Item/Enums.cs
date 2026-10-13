@@ -140,7 +140,8 @@ namespace SkillRebalanceExpansionMod.Models.Item
         神 = 6,
         体 = 7,
         剑 = 8,
-        气 = 9
+        气 = 9,
+        阵 = 10
     }
 
     /// <summary>
