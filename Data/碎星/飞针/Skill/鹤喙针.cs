@@ -81,15 +81,8 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             {
                 key = "鹤喙针",
                 realId = 127,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
                 descr = TierValue<string>.Create(descrFunc, skillLv),
-                // attackType = ,
-                // script = ,
-                // skillEffect = ,
                 seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
                     tier => new()
                     {
@@ -107,51 +100,20 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     },
                     skillLv
                 ),
-                // cost = new List<(CardType, int)>
-                // {
-                //     (CardType.同, 1)
-                // },
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
-                // df = ,
-                // hp = TierValue<int>.Create(tier => , skillLv),
-                // icon = ,
-                // qingJiaoType = ,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
-                // skillJie = ,
-                // skillOpen = ,
-                // skillPin = ,
-                // skillType = ,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv
                 ),
-                // tuJianType = ,
             },
             new SkillData
             {
                 key = "鹤喙针(消散木灵气)",
-                // realId = ,
                 localId = 1,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
                 name = TierValue<string>.Create(tier => "消散1木灵气", skillLv),
                 descr = TierValue<string>.Create(tier => "消散1木灵气", skillLv),
                 attackType = new List<AttackType> { AttackType.气 },
@@ -169,33 +131,16 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     skillLv
                 ),
                 cost = new List<(CardType, int)> {},
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
                 df = false,
                 hp = TierValue<int>.Create(tier => 0, skillLv),
-                // icon = ,
                 qingJiaoType = QingJiaoType.不可请教,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
                 skillJie = SkillJie.人,
-                // skillOpen = ,
                 skillPin = SkillPin.下,
                 skillType = SkillType.废弃,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv
@@ -205,11 +150,8 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             new SkillData
             {
                 key = "鹤喙针(消散水灵气)",
-                // realId = ,
                 localId = 2,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
                 name = TierValue<string>.Create(tier => "消散1水灵气", skillLv),
                 descr = TierValue<string>.Create(tier => "消散1水灵气", skillLv),
                 attackType = new List<AttackType> { AttackType.气 },
@@ -227,33 +169,16 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     skillLv
                 ),
                 cost = new List<(CardType, int)> {},
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
                 df = false,
                 hp = TierValue<int>.Create(tier => 0, skillLv),
-                // icon = ,
                 qingJiaoType = QingJiaoType.不可请教,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
                 skillJie = SkillJie.人,
-                // skillOpen = ,
                 skillPin = SkillPin.下,
                 skillType = SkillType.废弃,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv

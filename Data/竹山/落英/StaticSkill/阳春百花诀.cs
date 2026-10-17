@@ -58,22 +58,12 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
             {
                 key = "阳春百花诀",
                 realId = 119,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
                 descr = TierValue<string>.Create(descrFunc, skillLv),
-                // attackType = ,
-
-                // ==================== 选填字段 ====================
                 affix = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // df = ,
-                // icon = ,
-                // qingJiaoType = ,
                 seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
                     tier => new()
                     {
@@ -94,16 +84,11 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
                     },
                     skillLv
                 ),
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillJie = ,
-                // skillPin = ,
                 skillSpeed = TierValue<int>.Create(tier => 720 * tier, skillLv),
-                // skillStyle = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv
                 ),
-                // tuJianType = ,
             }
         ];
     }

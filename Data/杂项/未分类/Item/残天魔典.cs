@@ -58,10 +58,7 @@ namespace SkillRebalanceExpansionMod.Data.Item
             new ItemData
             {
                 key = "残天魔典",
-                // realId = ,
                 localId = 4,
-
-                // ==================== 必填字段 ====================
                 name = "?天?典",
                 seidData = new()
                 {
@@ -70,52 +67,23 @@ namespace SkillRebalanceExpansionMod.Data.Item
                         ["value1"] = "@ssId:残天魔典"
                     }
                 },
-
-                // ==================== 技能书/功法书特化 ====================
                 skillKey = "@bookInfo:残天魔典",
-                // qingJiao = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
                 desc2 = "由阴魂岛魂体从无尽海中搜集残篇拼凑出的上古天阶功法，其具体出处已经无从考据",
-                // faBaoType = ,
                 itemFlag = [
                     ItemFlag.功法秘籍,
                     ItemFlag.天阶功法,
                     ItemFlag.天阶功法杂学,
                 ],
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
-                // quality = ,
                 shopType = ShopType.不投放,
-                // shuaXin = ,
-                // shuXingType = ,
                 stuTime = 1080,
-                // tuJianType = ,
-                // type = ,
-                // typePinJie = ,
-                // vagueType = ,
                 wuDao = [
                     (DaoType.气, DaoLevel.道之真境)
                 ],
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             },
             new ItemData
             {
                 key = "残天魔典(请教)",
-                // realId = ,
                 localId = 4,
-
-                // ==================== 必填字段 ====================
                 name = "残天魔典",
                 seidData = new()
                 {
@@ -124,44 +92,14 @@ namespace SkillRebalanceExpansionMod.Data.Item
                         ["value1"] = "@ssId:残天魔典"
                     }
                 },
-
-                // ==================== 技能书/功法书特化 ====================
                 skillKey = "@bookInfo:残天魔典",
                 qingJiao = true,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
                 desc2 = "魔道功法",
-                // faBaoType = ,
-                itemFlag = [
-                    ItemFlag.功法秘籍,
-                    ItemFlag.天阶功法,
-                    ItemFlag.天阶功法杂学,
-                ],
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
-                // quality = ,
-                shopType = ShopType.不投放,
-                // shuaXin = ,
-                // shuXingType = ,
+                itemFlag = [],
                 stuTime = 720,
-                // tuJianType = ,
-                // type = ,
-                // typePinJie = ,
-                // vagueType = ,
                 wuDao = [
                     (DaoType.气, DaoLevel.融会贯通)
                 ],
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             },
         ];
     }

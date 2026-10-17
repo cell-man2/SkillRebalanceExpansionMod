@@ -54,44 +54,12 @@ namespace SkillRebalanceExpansionMod.Data.StaticSkill
             {
                 key = "残天魔典",
                 realId = 747,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
-                // descr = TierValue<string>.Create(descrFunc, skillLv),
-                // attackType = ,
-
-                // ==================== 选填字段 ====================
-                // affix = TierValue<List<int>>.Create(
-                //     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
-                //     skillLv
-                // ),
                 df = true,
-                // icon = ,
-                // qingJiaoType = ,
-                // seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new()
-                //     {
-                //         [1] = new()
-                //         {
-                //             ["target"] = 1,
-                //             ["value1"] = new List<object> {},
-                //             ["value2"] = new List<object> {}
-                //         }
-                //     },
-                //     skillLv
-                // ),
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
                 skillJie = SkillJie.天,
                 skillPin = SkillPin.上,
                 skillSpeed = TierValue<int>.Create(tier => 864 * tier, skillLv),
-                // skillStyle = ,
-                // tuJianDescr = TierValue<string>.Create(
-                //     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
-                //     skillLv
-                // ),
-                // tuJianType = ,
+                tuJianType = TuJianType.功法,
             }
         ];
     }

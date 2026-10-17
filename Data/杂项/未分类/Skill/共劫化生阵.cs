@@ -86,10 +86,7 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             {
                 key = "共劫化生阵",
                 realId = 826,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
                 name = TierValue<string>.Create(tier => $"共劫化生阵{tier}", skillLv),
                 descr = TierValue<string>.Create(descrFunc, skillLv),
                 attackType = new List<AttackType> { AttackType.阵法, AttackType.木 },
@@ -136,33 +133,16 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     (CardType.木, 4),
                     (CardType.同, 4)
                 },
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
                 df = true,
                 hp = TierValue<int>.Create(tier => 0, skillLv),
-                // icon = ,
                 qingJiaoType = QingJiaoType.海外不传,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
                 skillJie = SkillJie.天,
-                // skillOpen = ,
                 skillPin = SkillPin.中,
                 skillType = SkillType.废弃,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv
@@ -173,10 +153,7 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             {
                 key = "共劫化生阵-驱",
                 realId = 876,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
                 name = TierValue<string>.Create(tier => "共劫化生阵-驱", skillLv),
                 descr = TierValue<string>.Create(descrFunc2, skillLv),
                 attackType = new List<AttackType> { AttackType.气, AttackType.木 },
@@ -201,38 +178,18 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     (CardType.同, 1),
                     (CardType.同, 1)
                 },
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc2(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
-                // df = ,
                 hp = TierValue<int>.Create(tier => 0, skillLv),
-                // icon = ,
-                // qingJiaoType = ,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
                 skillJie = SkillJie.天,
-                // skillOpen = ,
                 skillPin = SkillPin.中,
                 skillType = SkillType.废弃,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc2(tier)),
                     skillLv
                 ),
-                // tuJianType = ,
             }
         ];
     }

@@ -59,27 +59,8 @@ namespace SkillRebalanceExpansionMod.Data.Item
             {
                 key = "共劫化生阵",
                 realId = 3826,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
                 name = "共劫化生阵",
-                // seidData = new()
-                // {
-                // 
-                // },
-
-                // ==================== 技能书/功法书特化 ====================
-                // skillKey = ,
-                // qingJiao = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
                 desc2 = "木系阵法，以气血勾连双方命数，如连理之木。阵中之人同承劫数，施阵者借阵引劫数化生。",
-                // faBaoType = ,
                 itemFlag =
                 [
                     ItemFlag.神通秘籍,
@@ -87,77 +68,33 @@ namespace SkillRebalanceExpansionMod.Data.Item
                     ItemFlag.天阶木系神通,
                     ItemFlag.天阶阵法类神通    
                 ],
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
                 price = 42000,
                 quality = 3,
                 shopType = ShopType.无尽之海拍卖秘籍,
-                // shuaXin = ,
-                // shuXingType = ,
                 stuTime = 960,
-                // tuJianType = ,
-                // type = ,
                 typePinJie = 2,
-                // vagueType = ,
                 wuDao =
                 [
                     (DaoType.木, DaoLevel.融会贯通),
                     (DaoType.阵, DaoLevel.融会贯通),
                 ],
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             },
             new ItemData
             {
                 key = "共劫化生阵(请教)",
                 realId = 3826,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
                 name = "共劫化生阵",
-                // seidData = new()
-                // {
-                // 
-                // },
-
-                // ==================== 技能书/功法书特化 ====================
-                // skillKey = ,
                 qingJiao = true,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
-                desc2 = "木系阵法，以气血勾连双方命数，如连理之木。阵中之人同承劫数，施阵者借阵引劫数化生。",
-                // faBaoType = ,
+                desc2 = "木系天阶阵法。",
                 itemFlag = [],
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
                 quality = 3,
-                // shopType = ,
-                // shuaXin = ,
-                // shuXingType = ,
                 stuTime = 960,
-                // tuJianType = ,
-                // type = ,
                 typePinJie = 2,
-                // vagueType = ,
                 wuDao =
                 [
                     (DaoType.木, DaoLevel.融会贯通),
                     (DaoType.阵, DaoLevel.融会贯通),
                 ],
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             }
         ];
     }

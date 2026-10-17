@@ -32,11 +32,7 @@ namespace SkillRebalanceExpansionMod.Data.Shop
     {
         public static void Register()
         {
-            // 添加商品示例
             ShopCollection.天机.秘籍.Add(3507);
-
-            // 移除商品示例
-            // ShopCollection.天机.秘籍.Remove(114514);
         }
     }
 }

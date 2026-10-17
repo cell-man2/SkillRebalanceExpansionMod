@@ -39,10 +39,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             new BuffData
             {
                 key = "鹤喙针(木灵气检测)",
-                // realId = ,
                 localId = 76,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "若木灵气数（attack）>4，则执行水灵气检测",
                 name = "鹤喙针（木灵气检测）",
@@ -62,25 +59,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 4096,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "鹤喙针(执行水灵气检测)",
-                // realId = ,
                 localId = 77,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "获得等量于当前水灵气数的水灵气检测",
                 name = "鹤喙针（执行水灵气检测）",
@@ -96,25 +81,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 4096,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "鹤喙针(水灵气检测)",
-                // realId = ,
                 localId = 78,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "若水灵气数（attack）>4，获得消散木灵气*1",
                 name = "鹤喙针（水灵气检测）",
@@ -134,25 +107,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 4096,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "鹤喙针(消散木灵气)",
-                // realId = ,
                 localId = 79,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "消散1点木灵气，获得消散水灵气*1",
                 name = "鹤喙针（消散木灵气）",
@@ -171,25 +132,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 4096,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "鹤喙针(消散水灵气)",
-                // realId = ,
                 localId = 80,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "消散1点水灵气，获得释放技能*1",
                 name = "鹤喙针（消散水灵气）",
@@ -208,25 +157,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 4096,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "鹤喙针(释放技能)",
-                // realId = ,
                 localId = 81,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "释放鹤喙针",
                 name = "鹤喙针（释放技能）",
@@ -239,17 +176,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 4096,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
         ];
     }

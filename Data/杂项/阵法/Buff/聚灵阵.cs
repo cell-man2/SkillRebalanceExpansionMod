@@ -40,29 +40,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             {
                 key = "聚灵阵",
                 realId = 50,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
-                // buffType = ,
-                // descr = ,
-                // name = ,
-                // removeTrigger = ,
-                // seidData = new()
-                // {
-
-                // },
-                // trigger = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // buffIcon = ,
-                // isHide = ,
-                // loopTime = ,
-                // script = ,
                 showOnlyOne = true,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             }
         ];
     }

@@ -39,10 +39,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             new BuffData
             {
                 key = "夺灵术(灵气计数)",
-                // realId = ,
                 localId = 62,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "每有1灵气，让对方偷取1灵气",
                 name = "夺灵术（灵气计数）",
@@ -57,25 +54,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 9238,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "夺灵术(执行偷牌)",
-                // realId = ,
                 localId = 63,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "对方偷取自己（attack）点灵气",
                 name = "夺灵术（执行偷牌）",
@@ -89,17 +74,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 9238,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             }
         ];
     }

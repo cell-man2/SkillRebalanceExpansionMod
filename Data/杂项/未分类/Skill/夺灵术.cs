@@ -81,15 +81,9 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             {
                 key = "夺灵术",
                 realId = 510,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
                 descr = TierValue<string>.Create(descrFunc, skillLv),
-                // attackType = ,
                 script = Script.对敌人,
-                // skillEffect = ,
                 seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
                     tier => new()
                     {
@@ -108,33 +102,13 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     (CardType.同, 3),
                     (CardType.同, 2)
                 },
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
                 df = true,
                 hp = TierValue<int>.Create(tier => 0, skillLv),
-                // icon = ,
                 qingJiaoType = QingJiaoType.宁州不传,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
-                // skillJie = ,
-                // skillOpen = ,
-                // skillPin = ,
-                // skillType = ,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
                     skillLv

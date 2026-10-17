@@ -40,9 +40,6 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             {
                 key = "共劫化生阵(展示)",
                 realId = 75,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.阵法,
                 descr = "双方受到技能伤害时，将伤害的20%转嫁给对方；每因此转移（attack）点伤害使你获得（attack）点临时血量上限",
                 name = "共劫化生阵",
@@ -66,25 +63,12 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.不主动触发,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // buffIcon = ,
-                // isHide = ,
-                // loopTime = ,
-                // script = ,
                 showOnlyOne = true,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(劫指示)",
-                // realId = ,
                 localId = 55,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "指示物-每处理（attack）点伤害后，触发一次共劫化生阵并移除劫*（attack）层",
                 name = "共劫化生阵（劫指示）",
@@ -94,25 +78,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     
                 },
                 trigger = Trigger.不主动触发,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(触发阵法)",
-                // realId = ,
                 localId = 56,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "依据指示移除对应层数的劫，然后触发一次共劫化生阵",
                 name = "共劫化生阵（触发阵法）",
@@ -133,25 +105,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(移除劫)",
-                // realId = ,
                 localId = 57,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "移除劫*（attack）层",
                 name = "共劫化生阵（移除劫）",
@@ -165,25 +125,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(劫)",
-                // realId = ,
                 localId = 58,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "共劫化生阵已处理技能伤害（attack）点，若层数大于劫指示层数则触发共劫化生阵",
                 name = "共劫化生阵（劫）",
@@ -208,25 +156,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(敌方劫计数)",
-                // realId = ,
                 localId = 59,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "敌方获得劫*（attack）层",
                 name = "共劫化生阵（敌方劫计数）",
@@ -240,25 +176,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(我方转移伤害)",
-                // realId = ,
                 localId = 60,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "受到伤害时，将伤害的20%转移给对方，并获得等量技能伤害的劫",
                 name = "共劫化生阵（我方转移伤害）",
@@ -281,25 +205,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.受到技能伤害时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "共劫化生阵(敌方转移伤害)",
-                // realId = ,
                 localId = 61,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.指示物,
                 descr = "受到伤害时，将伤害的20%转移给对方，并令对方获得等量技能伤害的劫",
                 name = "共劫化生阵（敌方转移伤害）",
@@ -322,17 +234,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.受到技能伤害时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 75,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
         ];
     }

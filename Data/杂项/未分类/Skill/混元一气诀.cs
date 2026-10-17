@@ -72,8 +72,6 @@ namespace SkillRebalanceExpansionMod.Data.Skill
     public static class 混元一气诀
     {
         private static readonly List<int> skillLv = [1, 2, 3, 4, 5];
-        // private static readonly Func<int, string> descrFunc = tier =>
-        //     $"";
 
         public static List<SkillData> Data =
         [
@@ -81,58 +79,9 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             {
                 key = "混元一气诀",
                 realId = 506,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
-                // descr = TierValue<string>.Create(descrFunc, skillLv),
-                // attackType = ,
-                // script = ,
-                // skillEffect = ,
-                // seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new()
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // cost = new List<(CardType, int)>
-                // {
-                //     (CardType.同, 1)
-                // },
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // affix2 = TierValue<List<int>>.Create(
-                //     tier => AffixProcessor.ExtractAffix(descrFunc(tier)),
-                //     skillLv
-                // ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
                 df = true,
-                // hp = TierValue<int>.Create(tier => , skillLv),
-                // icon = ,
-                // qingJiaoType = ,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
-                // skillJie = ,
-                // skillOpen = ,
-                // skillPin = ,
-                // skillType = ,
-                // speed = ,
-                // tuJianDescr = TierValue<string>.Create(
-                //     tier => AffixProcessor.FormatTuJian(descrFunc(tier)),
-                //     skillLv
-                // ),
-                // tuJianType = ,
+                tuJianType = TuJianType.神通,
             }
         ];
     }

@@ -55,10 +55,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             new BuffData
             {
                 key = "血毒经(回血&展示)",
-                // realId = ,
                 localId = 50,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = descrFunc(),
                 name = "血毒经",
@@ -71,25 +68,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.对方中毒时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 240,
-                // isHide = ,
-                // loopTime = ,
-                // script = ,
                 showOnlyOne = true,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "血毒经(触发回血)",
-                // realId = ,
                 localId = 51,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "立刻触发一次血毒经的恢复效果",
                 name = "血毒经（触发回血）",
@@ -103,25 +88,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 240,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "血毒经(移除中毒)",
-                // realId = ,
                 localId = 52,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "自身中毒触发时，移除自身（attack）层中毒",
                 name = "血毒经（移除中毒）",
@@ -151,25 +124,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.不主动触发,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 240,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "血毒经(每回合中毒)",
-                // realId = ,
                 localId = 53,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "回合开始时，若没有【中毒】，获得【中毒】*1",
                 name = "血毒经（每回合中毒）",
@@ -187,25 +148,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.回合开始时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 240,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "血毒经(我方中毒检测)",
-                // realId = ,
                 localId = 54,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "当敌方中毒触发时，执行其拥有的血毒经后续效果",
                 name = "血毒经（我方中毒检测）",
@@ -219,17 +168,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.对方中毒时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 240,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             ..Wrappers()
         ];
@@ -244,8 +184,6 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 {
                     key = $"血毒经(包装{i + 1})",
                     realId = 240 + i,
-
-                    // ==================== 必填字段 ====================
                     buffType = BuffType.功法被动,
                     descr = $"立刻获得血毒经（第{i + 1}层的效果），如果看到这个buff说明血毒经没有被正确应用",
                     name = $"血毒经(包装{i + 1})",
@@ -274,17 +212,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                         },
                     },
                     trigger = Trigger.获得自身Buff后,
-
-                    // ==================== 选填字段 ====================
-                    // affix = ,
                     buffIcon = 240,
-                    // isHide = ,
-                    // loopTime = ,
-                    // script = ,
                     showOnlyOne = true,
-                    // skillEffect = ,
-                    // stackType = ,
-                    // totalTime = ,
                 });
             }
 

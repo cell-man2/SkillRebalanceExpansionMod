@@ -50,15 +50,9 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 {
                     key = $"酆都鬼蜮({i})",
                     realId = 91 + i,
-                    // localId = ,
-
-                    // ==================== 必填字段 ====================
-                    // buffType = ,
                     descr = $"回合结束时，获得【影匿】*（attack）、" +
                         $"【影役】*（{shadowServantNum[i-1]}*attack）、" +
                         $"【影】*（{shadowNum[i-1]}*attack）",
-                    // name = ,
-                    // removeTrigger = ,
                     seidData = new()
                     {
                         [5] = new()
@@ -67,18 +61,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                             ["value2"] = new List<object> { 1, shadowServantNum[i - 1], shadowNum[i - 1] }
                         }
                     },
-                    // trigger = ,
-
-                    // ==================== 选填字段 ====================
-                    // affix = ,
-                    // buffIcon = ,
-                    // isHide = ,
-                    // loopTime = ,
-                    // script = ,
-                    // showOnlyOne = ,
-                    // skillEffect = ,
-                    // stackType = ,
-                    // totalTime = ,
+                    showOnlyOne = true,
                 });
             }
 

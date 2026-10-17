@@ -156,15 +156,8 @@ namespace SkillRebalanceExpansionMod.Data.Skill
             {
                 key = "酆都鬼蜮-驱",
                 realId = 883,
-                // localId = ,
                 skillLv = skillLv,
-
-                // ==================== 必填字段 ====================
-                // name = TierValue<string>.Create(tier => , skillLv),
                 descr = TierValue<string>.Create(descrFunc2, skillLv),
-                // attackType = ,
-                // script = ,
-                // skillEffect = ,
                 seidData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
                     tier => new ()
                     {
@@ -178,42 +171,14 @@ namespace SkillRebalanceExpansionMod.Data.Skill
                     },
                     skillLv
                 ),
-                // cost = new List<(CardType, int)>
-                // {
-                //     (CardType.同, 1)
-                // },
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 affix2 = TierValue<List<int>>.Create(
                     tier => AffixProcessor.ExtractAffix(descrFunc2(tier)),
                     skillLv
                 ),
-                // aiData = TierValue<Dictionary<object, Dictionary<string, object>>>.Create(
-                //     tier => new Dictionary<object, Dictionary<string, object>>
-                //     {
-
-                //     },
-                //     skillLv
-                // ),
-                // canUseDistMax = ,
-                // cd = ,
-                // df = ,
-                // hp = TierValue<int>.Create(tier => , skillLv),
-                // icon = ,
-                // qingJiaoType = ,
-                // skillCastTime = TierValue<int>.Create(tier => , skillLv),
-                // skillDisplayType = ,
-                // skillJie = ,
-                // skillOpen = ,
-                // skillPin = ,
-                // skillType = ,
-                // speed = ,
                 tuJianDescr = TierValue<string>.Create(
                     tier => AffixProcessor.FormatTuJian(descrFunc2(tier)),
                     skillLv
                 ),
-                // tuJianType = ,
             }
         ];
     }

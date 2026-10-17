@@ -40,38 +40,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             {
                 key = "太阴玄毒功(加伤&展示)",
                 realId = 207,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
-                // buffType = ,
                 descr = "使用木系技能指定【中毒】状态下的对手时，对其造成的木系技能伤害+（attack），" +
                     "并令其获得【中毒】*（IIF(attack >= 7, 2, 1)）",
-                // name = ,
-                // removeTrigger = ,
-                // seidData = new()
-                // {
-
-                // },
-                // trigger = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // buffIcon = ,
-                // isHide = ,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "太阴玄毒功(附加中毒)",
                 realId = 208,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "使用木系技能指定【中毒】状态下的敌方后，敌方获得【中毒】*（attack）",
                 name = "太阴玄毒功（附加中毒）",
@@ -96,17 +71,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.使用技能时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // buffIcon = ,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             }
         ];
     }

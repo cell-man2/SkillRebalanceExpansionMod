@@ -59,54 +59,11 @@ namespace SkillRebalanceExpansionMod.Data.Item
             {
                 key = "酆都鬼蜮",
                 realId = 3833,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
-                // name = ,
-                // seidData = new()
-                // {
-                    
-                // },
-
-                // ==================== 技能书/功法书特化 ====================
-                // skillKey = ,
-                // qingJiao = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
-                // desc2 = ,
-                // faBaoType = ,
-                // itemFlag = ,
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
-                // quality = ,
-                // shopType = ,
-                // shuaXin = ,
-                // shuXingType = ,
-                // stuTime = ,
-                // tuJianType = ,
-                // type = ,
-                // typePinJie = ,
-                // vagueType = ,
-                // wuDao = ,
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             },
             new ItemData
             {
                 key = "酆都鬼蜮(请教)",
                 realId = 3833,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
                 name = "酆都鬼蜮",
                 seidData = new()
                 {
@@ -115,49 +72,21 @@ namespace SkillRebalanceExpansionMod.Data.Item
                         ["value1"] = 3833   
                     }
                 },
-
-                // ==================== 技能书/功法书特化 ====================
                 skillKey = "@bookInfo:酆都鬼蜮",
                 qingJiao = true,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
                 desc2 = "风雨楼杀手秘术",
-                // faBaoType = ,
                 itemFlag = [],
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
                 quality = 3,
-                // shopType = ,
-                // shuaXin = ,
-                // shuXingType = ,
                 stuTime = 480,
-                // tuJianType = ,
-                // type = ,
                 typePinJie = 3,
-                // vagueType = ,
                 wuDao = [
                     (DaoType.阵, DaoLevel.融会贯通)
                 ],
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             },
             new ItemData
             {
                 key = "公孙季的储物袋",
                 realId = 16229,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
-                // name = ,
                 seidData = new()
                 {
                     [20] = new()
@@ -187,38 +116,6 @@ namespace SkillRebalanceExpansionMod.Data.Item
                         ["value2"] = new List<object> {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
                     }
                 },
-
-                // ==================== 技能书/功法书特化 ====================
-                // skillKey = ,
-                // qingJiao = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
-                // desc2 = ,
-                // faBaoType = ,
-                // itemFlag = ,
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
-                // quality = ,
-                // shopType = ,
-                // shuaXin = ,
-                // shuXingType = ,
-                // stuTime = ,
-                // tuJianType = ,
-                // type = ,
-                // typePinJie = ,
-                // vagueType = ,
-                // wuDao = ,
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             },
         ];
     }

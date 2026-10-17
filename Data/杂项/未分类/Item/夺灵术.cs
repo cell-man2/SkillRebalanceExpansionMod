@@ -59,46 +59,6 @@ namespace SkillRebalanceExpansionMod.Data.Item
             {
                 key = "夺灵术",
                 realId = 3510,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
-                // name = ,
-                // seidData = new()
-                // {
-                // 
-                // },
-
-                // ==================== 技能书/功法书特化 ====================
-                // skillKey = ,
-                // qingJiao = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
-                // canSale = ,
-                // canUse = ,
-                // danDu = ,
-                // desc = ,
-                // desc2 = ,
-                // faBaoType = ,
-                // itemFlag = ,
-                // itemIcon = ,
-                // maxNum = ,
-                // npcCanUse = ,
-                // price = ,
-                // quality = ,
-                // shopType = ,
-                // shuaXin = ,
-                // shuXingType = ,
-                // stuTime = ,
-                // tuJianType = ,
-                // type = ,
-                // typePinJie = ,
-                // vagueType = ,
-                // wuDao = ,
-                // wuWeiType = ,
-                // yaoZhi1 = ,
-                // yaoZhi2 = ,
-                // yaoZhi3 = ,
             }
         ];
     }

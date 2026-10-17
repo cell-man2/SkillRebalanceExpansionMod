@@ -40,7 +40,6 @@ namespace SkillRebalanceExpansionMod.Data.Buff
         {
             List<BuffData> result = [];
 
-            // ==================== 万象寄生诀(展示1~5) ====================
             for (int i = 1; i <= 5; i++)
             {
                 var seidData = new Dictionary<object, Dictionary<string, object>>();
@@ -63,9 +62,6 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 {
                     key = $"万象寄生诀(展示{i})",
                     realId = 221 + i,
-                    // localId = ,
-
-                    // ==================== 必填字段 ====================
                     buffType = BuffType.功法被动,
                     descr = "每累计使用或消散3点木系灵气，" +
                         $"{(i<5 ? $"有{50+10*i}%的几率" : "")}" +
@@ -74,17 +70,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     removeTrigger = RemoveTrigger.不主动移除,
                     seidData = seidData,
                     trigger = Trigger.不主动触发,
-
-                    // ==================== 选填字段 ====================
-                    // affix = ,
                     buffIcon = 222,
-                    // isHide = ,
-                    // loopTime = ,
-                    // script = ,
-                    // showOnlyOne = ,
-                    // skillEffect = ,
-                    // stackType = ,
-                    // totalTime = ,
+                    showOnlyOne = true,
                 });
             }
 
@@ -93,41 +80,17 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             {
                 key = "万象寄生诀(放技能)",
                 realId = 227,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
-                // buffType = ,
                 descr = "释放一次【寄生引血术】",
-                // name = ,
-                // removeTrigger = ,
-                // seidData = new()
-                // {
-
-                // },
-                // trigger = ,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 222,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             });
 
-            // ==================== 万象寄生诀(触发1~5) ====================
             for (int i = 1; i <= 5; i++)
             {
                 result.Add(new BuffData
                 {
                     key = $"万象寄生诀(触发{i})",
-                    // realId = ,
-                    localId = 66 + i, // 67~71
-
-                    // ==================== 必填字段 ====================
+                    localId = 66 + i,
                     buffType = BuffType.功法被动,
                     descr = $"立刻执行（attack）次第{i}层万象寄生诀的效果",
                     name = $"万象寄生诀（触发{i}）",
@@ -141,28 +104,15 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                         }
                     },
                     trigger = Trigger.获得自身Buff后,
-
-                    // ==================== 选填字段 ====================
-                    // affix = ,
                     buffIcon = 222,
                     isHide = true,
-                    // loopTime = ,
-                    // script = ,
-                    // showOnlyOne = ,
-                    // skillEffect = ,
-                    // stackType = ,
-                    // totalTime = ,
                 });
             }
 
-            // ==================== 万象寄生诀(计数) ====================
             result.Add(new BuffData
             {
                 key = "万象寄生诀(计数)",
-                // realId = ,
                 localId = 72,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "已累积使用或消散（attack）点木系灵气，累积达到3层后触发一次万象寄生诀的效果",
                 name = "万象寄生诀（计数）",
@@ -190,27 +140,14 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.满3层后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 222,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             });
 
-            // ==================== 万象寄生诀(移除计数) ====================
             result.Add(new BuffData
             {
                 key = "万象寄生诀(移除计数)",
-                // realId = ,
                 localId = 73,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "移除3层万象寄生诀的计数，再触发计数",
                 name = "万象寄生诀（移除计数）",
@@ -229,27 +166,14 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.获得自身Buff后,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 222,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             });
 
-            // ==================== 万象寄生诀(使用灵气) ====================
             result.Add(new BuffData
             {
                 key = "万象寄生诀(使用灵气)",
-                // realId = ,
                 localId = 74,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "每使用1点木系灵气，获得计数*1",
                 name = "万象寄生诀（使用灵气）",
@@ -265,27 +189,14 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.使用卡牌时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 222,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             });
 
-            // ==================== 万象寄生诀(消散灵气) ====================
             result.Add(new BuffData
             {
                 key = "万象寄生诀(消散灵气)",
-                // realId = ,
                 localId = 75,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "每消散1点木系灵气，获得计数*1",
                 name = "万象寄生诀（消散灵气）",
@@ -301,17 +212,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.弃牌时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 222,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             });
 
             return result;

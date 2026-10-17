@@ -40,9 +40,6 @@ namespace SkillRebalanceExpansionMod.Data.Buff
             {
                 key = "阳春百花诀",
                 realId = 239,
-                // localId = ,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "每回合吸收灵气前，令你本回合吸收灵气数+（attack）",
                 name = "阳春百花诀",
@@ -55,25 +52,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     }
                 },
                 trigger = Trigger.抽牌阶段开始时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 239,
-                // isHide = ,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
+                showOnlyOne = true,
             },
             new BuffData
             {
                 key = "阳春百花诀(额外灵气)",
-                // realId = ,
                 localId = 64,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "本回合吸收灵气数+（attack）",
                 name = "阳春百花诀",
@@ -86,25 +71,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.抽牌阶段开始时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 239,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "阳春百花诀(限制&展示)",
-                // realId = ,
                 localId = 65,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "每回合吸收灵气前，令你本回合吸收灵气数+1；对手每有一种不同的负面状态，额外使吸收灵气数+1(上限为（attack-1）)",
                 name = "阳春百花诀",
@@ -127,25 +100,13 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.不主动触发,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 239,
-                // isHide = ,
-                // loopTime = ,
-                // script = ,
                 showOnlyOne = true,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
             new BuffData
             {
                 key = "阳春百花诀(负面检测)",
-                // realId = ,
                 localId = 66,
-
-                // ==================== 必填字段 ====================
                 buffType = BuffType.功法被动,
                 descr = "吸收灵气前，令你本回合吸收灵气数+（attack），且对手每有一种不同的负面状态，额外使吸收灵气数+1",
                 name = "阳春百花诀",
@@ -174,17 +135,8 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                     },
                 },
                 trigger = Trigger.抽牌阶段开始时,
-
-                // ==================== 选填字段 ====================
-                // affix = ,
                 buffIcon = 239,
                 isHide = true,
-                // loopTime = ,
-                // script = ,
-                // showOnlyOne = ,
-                // skillEffect = ,
-                // stackType = ,
-                // totalTime = ,
             },
         ];
     }
