@@ -69,7 +69,7 @@ namespace SkillRebalanceExpansionMod.Data.Item
                 {
                     [1] = new()
                     {
-                        ["value1"] = 3833   
+                        ["value1"] = "@sId:酆都鬼蜮"
                     }
                 },
                 skillKey = "@bookInfo:酆都鬼蜮",
