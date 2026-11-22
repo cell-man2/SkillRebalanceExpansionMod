@@ -48,7 +48,7 @@ namespace SkillRebalanceExpansionMod.Data.Buff
                 {
                     seidData[65] = new()
                     {
-                        ["value1"] = 40 + 10 * i
+                        ["value1"] = 50 + 10 * i
                     };
                 }
 
