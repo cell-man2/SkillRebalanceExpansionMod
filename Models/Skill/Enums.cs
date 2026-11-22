@@ -25,7 +25,7 @@ namespace SkillRebalanceExpansionMod.Models.Skill
         伤害 = 4,
         防御 = 5,
         填充 = 6,
-        废弃 = 20
+        废弃 = 1000
     }
 
     /// <summary>
